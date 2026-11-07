@@ -1,0 +1,101 @@
+function App() {
+  const [currentTheme, setCurrentTheme] = useState(() => localStorage.getItem('bubu_portfolio_theme') || 'blue');
+  const [activeSection, setActiveSection] = useState('home');
+  const [activePortfolioTab, setActivePortfolioTab] = useState('projects');
+  const [toast, setToast] = useState({ show: false, message: '' });
+  const toastTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    localStorage.setItem('bubu_portfolio_theme', currentTheme);
+  }, [currentTheme]);
+
+  const showToast = useCallback((message) => {
+    setToast({ show: true, message });
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    toastTimeoutRef.current = setTimeout(() => setToast({ show: false, message: '' }), 2800);
+  }, []);
+
+  useEffect(() => {
+    const sections = ['home', 'about', 'portfolio', 'contact'];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActiveSection(entry.target.id);
+      });
+    }, { rootMargin: '-35% 0px -45% 0px' });
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const handleExplore = () => {
+    setActivePortfolioTab('projects');
+    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <React.Fragment>
+      <StarfieldCanvas />
+      <Navbar
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        currentTheme={currentTheme}
+        setCurrentTheme={setCurrentTheme}
+        showToast={showToast}
+      />
+      <MobileDock activeSection={activeSection} setActiveSection={setActiveSection} />
+
+      <main>
+        <section className="hero-section" id="home">
+          <div className="wrap">
+            <div className="hero-grid">
+              <Hero onExploreProjects={handleExplore} />
+              <TechBook showToast={showToast} />
+            </div>
+          </div>
+        </section>
+
+        <section id="about">
+          <div className="wrap">
+            <About showToast={showToast} />
+            <Timeline />
+            <Stats onSelectTab={(t) => setActivePortfolioTab(t)} />
+          </div>
+        </section>
+
+        <section id="portfolio">
+          <div className="wrap">
+            <div className="center">
+              <h2 className="section-title">Portofolio</h2>
+            </div>
+            <PortfolioTabs activeTab={activePortfolioTab} setActiveTab={setActivePortfolioTab} />
+            <CoverflowGallery />
+          </div>
+        </section>
+
+        <section id="contact">
+          <div className="wrap">
+            <div className="center">
+              <span className="section-tag">Koneksi &amp; Diskusi</span>
+              <h2 className="section-title">Mari Berkolaborasi</h2>
+              <p className="section-desc">Terbuka untuk diskusi proyek magang, freelance, kolaborasi open source, atau sekadar berbagi cerita.</p>
+            </div>
+            <div className="contact-grid">
+              <Contact showToast={showToast} />
+              <Guestbook showToast={showToast} />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+
+      <BackToTop />
+
+      <Toast toast={toast} />
+    </React.Fragment>
+  );
+}

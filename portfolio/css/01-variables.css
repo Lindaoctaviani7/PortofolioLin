@@ -1,0 +1,73 @@
+/* ==========================================================================
+   CSS VARIABLES & THEME PRESETS
+   ========================================================================== */
+:root {
+  /* Default: Electric Blue */
+  --primary: #3b82f6;
+  --primary-glow: rgba(59, 130, 246, 0.35);
+  --primary-subtle: rgba(59, 130, 246, 0.12);
+  --primary-rgb: 59, 130, 246;
+
+  --accent: #60a5fa;
+  --warm: #fbbf24;
+  --success: #34d399;
+
+  --bg: #070913;
+  --bg-secondary: #0c0f1f;
+  --card: rgba(15, 20, 38, 0.72);
+  --card-hover: rgba(22, 29, 56, 0.88);
+  --card-solid: #0f1426;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-glow: 0 0 35px var(--primary-glow);
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+
+  color-scheme: dark;
+}
+
+[data-theme="violet"] {
+  --primary: #8b5cf6;
+  --primary-glow: rgba(139, 92, 246, 0.38);
+  --primary-subtle: rgba(139, 92, 246, 0.14);
+  --primary-rgb: 139, 92, 246;
+  --accent: #c084fc;
+}
+
+[data-theme="emerald"] {
+  --primary: #10b981;
+  --primary-glow: rgba(16, 185, 129, 0.38);
+  --primary-subtle: rgba(16, 185, 129, 0.14);
+  --primary-rgb: 16, 185, 129;
+  --accent: #34d399;
+}
+
+[data-theme="amber"] {
+  --primary: #f59e0b;
+  --primary-glow: rgba(245, 158, 11, 0.38);
+  --primary-subtle: rgba(245, 158, 11, 0.14);
+  --primary-rgb: 245, 158, 11;
+  --accent: #fbbf24;
+}
+
+[data-theme="rose"] {
+  --primary: #ec4899;
+  --primary-glow: rgba(236, 72, 153, 0.38);
+  --primary-subtle: rgba(236, 72, 153, 0.14);
+  --primary-rgb: 236, 72, 153;
+  --accent: #f472b6;
+}

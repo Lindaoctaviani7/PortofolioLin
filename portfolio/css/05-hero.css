@@ -1,0 +1,130 @@
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 160px 0 100px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 72px;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-content h1 {
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.theme-text {
+  color: var(--primary);
+  transition: color var(--transition);
+}
+
+.hero-subtext {
+  color: #ffffff;
+}
+
+.gradient-text {
+  color: var(--primary);
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: initial;
+}
+
+.typed-wrapper {
+  margin: 20px 0 16px;
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  color: var(--accent);
+  min-height: 1.8em;
+  display: flex;
+  align-items: center;
+}
+
+.caret {
+  display: inline-block;
+  width: 3px;
+  height: 1.15em;
+  background: var(--accent);
+  margin-left: 4px;
+  border-radius: 2px;
+  animation: blink 0.9s infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.hero-lead {
+  color: #cbd5e1;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 55ch;
+  margin-bottom: 32px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.social-strip {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.social-strip .label {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.social-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.social-chip {
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  background: rgba(15, 20, 36, 0.6);
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.social-chip:hover {
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  color: #fff;
+  transform: translateY(-2px);
+}

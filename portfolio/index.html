@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="blue">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Bubu | Portofolio Front-End & UI/UX (React Preview)</title>
+  <meta name="description" content="Portofolio resmi Bubu - Front-End Developer dan UI/UX Designer (React Version).">
+  <meta name="theme-color" content="#070913">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+
+  <!-- React 18 & Babel CDN for Standalone Browser Preview without Node.js -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Stylesheet (urutan = urutan cascade, jangan diubah) -->
+  <link rel="stylesheet" href="css/01-variables.css">
+  <link rel="stylesheet" href="css/02-base.css">
+  <link rel="stylesheet" href="css/03-navigation.css">
+  <link rel="stylesheet" href="css/04-buttons.css">
+  <link rel="stylesheet" href="css/05-hero.css">
+  <link rel="stylesheet" href="css/06-music-player.css">
+  <link rel="stylesheet" href="css/07-sections.css">
+  <link rel="stylesheet" href="css/08-about.css">
+  <link rel="stylesheet" href="css/09-portfolio.css">
+  <link rel="stylesheet" href="css/10-gallery.css">
+  <link rel="stylesheet" href="css/11-contact.css">
+  <link rel="stylesheet" href="css/12-toast-footer.css">
+  <link rel="stylesheet" href="css/13-responsive.css">
+  <link rel="stylesheet" href="css/14-tech-book.css">
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- Urutan script penting: data & util -> komponen -> App -> render -->
+  <script src="js/core/react-hooks.js"></script>
+  <script src="js/data/portfolioData.js"></script>
+  <script src="js/utils/stringToColor.js"></script>
+  <script type="text/babel" src="js/utils/socialIcons.jsx"></script>
+  <script type="text/babel" src="js/data/techSkills.jsx"></script>
+  <script type="text/babel" src="js/components/layout/StarfieldCanvas.jsx"></script>
+  <script type="text/babel" src="js/components/layout/Navbar.jsx"></script>
+  <script type="text/babel" src="js/components/layout/MobileDock.jsx"></script>
+  <script type="text/babel" src="js/components/layout/Footer.jsx"></script>
+  <script type="text/babel" src="js/components/layout/BackToTop.jsx"></script>
+  <script type="text/babel" src="js/components/layout/Toast.jsx"></script>
+  <script type="text/babel" src="js/components/sections/Hero.jsx"></script>
+  <script type="text/babel" src="js/components/sections/TechBook.jsx"></script>
+  <script type="text/babel" src="js/components/sections/About.jsx"></script>
+  <script type="text/babel" src="js/components/sections/Timeline.jsx"></script>
+  <script type="text/babel" src="js/components/sections/Stats.jsx"></script>
+  <script type="text/babel" src="js/components/sections/PortfolioTabs.jsx"></script>
+  <script type="text/babel" src="js/components/sections/CoverflowGallery.jsx"></script>
+  <script type="text/babel" src="js/components/sections/Contact.jsx"></script>
+  <script type="text/babel" src="js/components/sections/Guestbook.jsx"></script>
+  <script type="text/babel" src="js/App.jsx"></script>
+  <script type="text/babel" src="js/main.jsx"></script>
+</body>
+
+</html>
