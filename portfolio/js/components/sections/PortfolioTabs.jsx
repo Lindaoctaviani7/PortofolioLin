@@ -44,7 +44,7 @@ function PortfolioTabs({ activeTab, setActiveTab }) {
                     type="button"
                     onClick={() => setExpandedProjects((p) => ({ ...p, [idx]: !p[idx] }))}
                   >
-                    <span>{isExpanded ? 'Tutup Detail Fitur' : 'Lihat Detail Fitur'}</span>
+                    <span>{isExpanded ? 'Detail Fitur' : 'Lihat Detail Fitur'}</span>
                   </button>
                   {isExpanded && (
                     <ul className="project-details">
