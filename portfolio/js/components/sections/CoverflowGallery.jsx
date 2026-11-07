@@ -7,11 +7,6 @@ function CoverflowGallery() {
 
   return (
     <div className="gallery-section">
-      <div className="center">
-        <span className="section-tag">Dokumentasi &amp; Kilas Balik</span>
-        <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '8px' }}>Galeri Kegiatan &amp; Perjalanan</h3>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>Geser untuk melihat dokumentasi kegiatan</p>
-      </div>
 
       <div className="flow-container">
         {items.map((item, i) => {

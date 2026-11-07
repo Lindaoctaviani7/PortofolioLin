@@ -1,0 +1,326 @@
+/* ==========================================================================
+   FOLDER STATS 3D (Proyek Selesai / Sertifikasi)
+   Folder punya ketebalan nyata (punggung, dinding samping, alas), kertas
+   berdiri di kedalaman berbeda, tutup depan terbuka menekuk ke depan.
+   Warna mengikuti tema lewat --primary, --primary-rgb, --accent.
+   ========================================================================== */
+.stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 340px));
+  justify-content: center;
+  gap: 24px 100px;
+  margin-top: 36px;
+}
+
+.folder-item {
+  --D: 64px;          /* ketebalan folder */
+  --H: 200px;         /* tinggi badan folder */
+  --step: 36px;       /* selisih tinggi punggung & tutup depan */
+    --f-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --f-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --f-back: color-mix(in srgb, var(--primary) 36%, #0a1124);
+  --f-wall: color-mix(in srgb, var(--primary) 26%, #070b18);
+  --f-floor: color-mix(in srgb, var(--primary) 20%, #050813);
+  --f-glass: rgba(var(--primary-rgb), 0.9);
+  --f-paper: color-mix(in srgb, var(--accent) 10%, #f7f9fd);
+  --f-paper-2: color-mix(in srgb, var(--accent) 24%, #e3ebf8);
+  --f-bar: color-mix(in srgb, var(--primary) 36%, #cdd7e8);
+  --f-ink: color-mix(in srgb, var(--primary) 30%, #0f172a);
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.folder-stage {
+  position: relative;
+  height: 372px;
+  perspective: 1100px;
+  perspective-origin: 50% 28%;
+}
+
+/* ---------- Bayangan lantai ---------- */
+.folder-ground {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 22px;
+  height: 34px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, rgba(var(--primary-rgb), 0.18) 45%, transparent 72%);
+  filter: blur(5px);
+  transition: transform 0.6s var(--f-ease), opacity 0.6s var(--f-ease);
+}
+.folder-item.is-open .folder-ground { transform: scale(0.92, 1.1); opacity: 0.85; }
+
+/* ---------- Kerangka 3D ---------- */
+.folder-3d {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 40px;
+  height: var(--H);
+  transform-style: preserve-3d;
+  transform: rotateX(-8deg) rotateY(-12deg);
+  transition: transform 0.8s var(--f-spring);
+}
+.folder-item.is-open .folder-3d { transform: rotateX(-6deg) rotateY(-7deg); }
+
+.f3-back,
+.f3-wall,
+.f3-floor,
+.folder-card,
+.folder-flap { position: absolute; }
+
+/* punggung + tab */
+.f3-back {
+  inset: 0;
+  border-radius: 22px;
+  background: var(--f-back);
+  transform: translateZ(calc(var(--D) / -2));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: background 0.45s ease;
+}
+.f3-tab {
+  position: absolute;
+  left: 0;
+  top: -26px;
+  width: 38%;
+  height: 28px;
+  background: var(--f-back);
+  border-radius: 14px 0 0 0;
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 100%, 0 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transition: background 0.45s ease;
+}
+
+/* dinding samping (miring: tinggi di punggung, rendah di depan) */
+.f3-wall {
+  top: 0;
+  width: var(--D);
+  height: var(--H);
+  margin-left: calc(var(--D) / -2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%), var(--f-wall);
+  transition: background-color 0.45s ease;
+}
+.f3-wall-l {
+  left: 0;
+  transform: rotateY(-90deg);
+  clip-path: polygon(0 0, 100% var(--step), 100% 100%, 0 100%);
+}
+.f3-wall-r {
+  left: 100%;
+  transform: rotateY(90deg);
+  clip-path: polygon(0 var(--step), 100% 0, 100% 100%, 0 100%);
+  filter: brightness(0.8);
+}
+.f3-floor {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--D);
+  margin-bottom: calc(var(--D) / -2);
+  background: var(--f-floor);
+  transform: rotateX(90deg);
+  transition: background-color 0.45s ease;
+}
+
+/* ---------- Kartu isi folder (bersusun rapi, tidak dikipas) ---------- */
+.folder-card {
+  position: absolute;
+  height: 150px;
+  border-radius: 12px;
+  background: var(--card-bg, var(--f-paper));
+  background-size: cover;
+  background-position: top center;
+  box-shadow: 0 -3px 12px -4px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+  overflow: hidden;
+  color: var(--f-ink);
+  transition: transform 0.5s var(--f-ease), background-color 0.45s ease;
+}
+.folder-card::before { /* garis aksen atas */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--primary);
+  transition: background 0.45s ease;
+}
+
+/* k = urutan dari depan. Makin ke belakang: makin sempit, makin tinggi, makin dalam */
+.fc-0 { --card-bg: var(--f-paper);                                                  left: 4%;   right: 4%;   top: 40px; transform: translate3d(0, 0, 14px); }
+.fc-1 { --card-bg: color-mix(in srgb, var(--accent) 14%, #eef3fb);                  left: 6.5%; right: 6.5%; top: 32px; transform: translate3d(0, 0, 5px); }
+.fc-2 { --card-bg: color-mix(in srgb, var(--accent) 22%, #e2eaf6);                  left: 9%;   right: 9%;   top: 24px; transform: translate3d(0, 0, -4px); }
+.fc-3 { --card-bg: color-mix(in srgb, var(--accent) 30%, #d4def0);                  left: 11.5%; right: 11.5%; top: 16px; transform: translate3d(0, 0, -13px); }
+
+.card-head {
+  position: relative;
+  height: 24px;
+  margin-top: 3px;
+  padding: 0 10px 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.card-head,
+.card-body { opacity: 0; transition: opacity 0.15s ease; }
+.folder-item.is-open .card-head,
+.folder-item.is-open .card-body { opacity: 1; transition: opacity 0.3s ease 0.28s; }
+
+.card-title {
+  min-width: 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-idx { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; opacity: 0.5; }
+.ghost-bar { display: block; width: 46%; height: 6px; border-radius: 99px; background: var(--f-bar); opacity: 0.8; }
+
+.card-body { padding: 4px 12px 0; }
+.card-sub {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  opacity: 0.72;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-more { display: inline-block; margin-top: 4px; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; opacity: 0.55; }
+
+/* kartu bergambar (isi DATA.item.img) */
+.folder-card.has-img .card-head {
+  background: rgba(6, 10, 26, 0.72);
+  color: #fff;
+  margin-top: 0;
+  padding-top: 3px;
+  height: 27px;
+}
+
+.paper-go {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 99px;
+  padding: 4px 10px;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.paper-go:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--primary-glow); }
+.paper-go:focus-visible { outline: 2px solid #0f172a; outline-offset: 2px; }
+
+/* ---------- Tutup depan (kaca), berengsel di bawah ---------- */
+.folder-flap {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--H) - var(--step));
+  transform-origin: 50% 100%;
+  transform: translateZ(calc(var(--D) / 2)) rotateX(0deg);
+  transition: transform 0.5s var(--f-ease);
+}
+
+.folder-front {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-top-color: rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  background-color: var(--f-glass);
+  background-image:
+    linear-gradient(125deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.04) 38%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.1) 100%),
+    linear-gradient(rgba(6, 10, 26, 0.3), rgba(6, 10, 26, 0.3));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -18px 30px -18px rgba(0, 0, 0, 0.5);
+  padding: 16px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  text-align: left;
+  font-family: inherit;
+  color: var(--text);
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.45s ease;
+}
+.folder-front:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.folder-top,
+.folder-bottom { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; width: 100%; }
+.folder-bottom { align-items: flex-end; }
+
+.folder-tag { font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+.folder-count {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.folder-text { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.folder-title {
+  display: block;
+  font-size: clamp(1.7rem, 2.4vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  background: linear-gradient(180deg, #fff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.folder-title span { display: block; padding-bottom: 0.05em; }
+.folder-sub { font-size: 0.76rem; color: rgba(241, 245, 249, 0.72); }
+
+.folder-go {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #0b1226;
+  box-shadow: 0 6px 14px -4px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s var(--f-spring);
+}
+
+/* ---------- Terbuka: kartu naik setengah, bersusun rapi seperti anak tangga ---------- */
+.folder-item.is-open .folder-card,
+.folder-item.is-open .folder-flap { transition-duration: 0.7s; transition-timing-function: var(--f-spring); }
+
+.folder-item.is-open .fc-0 { transform: translate3d(0, -79px, 14px); }
+.folder-item.is-open .fc-1 { transform: translate3d(0, -93px, 5px);  transition-delay: 0.04s; }
+.folder-item.is-open .fc-2 { transform: translate3d(0, -107px, -4px); transition-delay: 0.08s; }
+.folder-item.is-open .fc-3 { transform: translate3d(0, -121px, -13px); transition-delay: 0.12s; }
+.folder-item.is-open .folder-flap { transform: translateZ(calc(var(--D) / 2)) rotateX(-16deg); }
+.folder-item.is-open .folder-go { transform: rotate(180deg); }
+
+@media (max-width: 380px) {
+  .folder-item { --H: 190px; }
+  .folder-title { font-size: 1.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folder-3d, .folder-card, .folder-flap, .folder-go, .folder-ground { transition-duration: 0.01ms !important; }
+}

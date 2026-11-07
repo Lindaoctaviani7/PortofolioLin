@@ -241,42 +241,4 @@
   margin-top: 50px;
 }
 
-.stat-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 26px;
-  text-align: left;
-  cursor: pointer;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-  user-select: none;
-}
-
-.stat-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px -10px var(--primary-glow);
-}
-
-.stat-card strong {
-  display: block;
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
-  line-height: 1;
-  font-weight: 800;
-  color: var(--primary);
-  margin-bottom: 12px;
-}
-
-.stat-card b {
-  display: block;
-  font-size: 1.05rem;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-
-.stat-card span {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
+/* Kartu statistik kini berbentuk folder: lihat css/15-folder-stats.css */

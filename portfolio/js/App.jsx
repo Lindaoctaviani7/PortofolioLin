@@ -76,19 +76,6 @@ function App() {
           </div>
         </section>
 
-        <section id="contact">
-          <div className="wrap">
-            <div className="center">
-              <span className="section-tag">Koneksi &amp; Diskusi</span>
-              <h2 className="section-title">Mari Berkolaborasi</h2>
-              <p className="section-desc">Terbuka untuk diskusi proyek magang, freelance, kolaborasi open source, atau sekadar berbagi cerita.</p>
-            </div>
-            <div className="contact-grid">
-              <Contact showToast={showToast} />
-              <Guestbook showToast={showToast} />
-            </div>
-          </div>
-        </section>
       </main>
 
       <Footer />

@@ -3,7 +3,7 @@ const DATA = {
   roles: [
     "Front-End Developer",
     "UI/UX Designer",
-    "Pembelajar Flutter & Mobile",
+    "Software Developer",
     "Creative Problem Solver"
   ],
   hero: "Sedang menempuh perjalanan di dunia Informatika, mengeksplorasi teknologi, dan mengembangkan ide melalui kode. Setiap proses membawa pengalaman baru, dan setiap karya menjadi bagian dari perjalanan saya.",
