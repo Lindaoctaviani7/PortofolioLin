@@ -137,11 +137,10 @@
 }
 
 .timeline-box {
-  background: var(--card);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--line);
+  background: transparent;
+  border: none;
   border-radius: var(--radius-lg);
-  padding: 28px;
+  padding: 0;
 }
 
 .timeline-box h3 {
