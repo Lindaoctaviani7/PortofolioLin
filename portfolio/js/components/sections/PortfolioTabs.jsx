@@ -1,5 +1,19 @@
-function PortfolioTabs({ activeTab, setActiveTab }) {
+function PortfolioTabs({ activeTab, setActiveTab, focusItem }) {
   const [expandedProjects, setExpandedProjects] = useState({});
+  const [highlight, setHighlight] = useState(null); // 'projects-1', 'certificates-0', ...
+
+  // Dari klik kartu di folder: buka detail, gulir ke item, lalu sorot sebentar
+  useEffect(() => {
+    if (!focusItem) return;
+    const id = `${focusItem.key}-${focusItem.idx}`;
+    if (focusItem.key === 'projects') setExpandedProjects((p) => ({ ...p, [focusItem.idx]: true }));
+    setHighlight(id);
+    const t1 = setTimeout(() => {
+      document.getElementById(`pf-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 450);
+    const t2 = setTimeout(() => setHighlight(null), 3200);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [focusItem]);
 
   const tabs = [
     { key: 'projects', label: 'Proyek' },
@@ -30,7 +44,8 @@ function PortfolioTabs({ activeTab, setActiveTab }) {
             {DATA.projects.map((proj, idx) => {
               const isExpanded = !!expandedProjects[idx];
               return (
-                <article className="project-card" key={idx}>
+                <article className={`project-card ${highlight === `projects-${idx}` ? 'is-focus' : ''}`} id={`pf-projects-${idx}`} key={idx}>
+                  {proj.img && <img className="pf-thumb" src={proj.img} alt={proj.t} loading="lazy" />}
                   <span className="project-badge">Proyek Unggulan</span>
                   <h3>{proj.t}</h3>
                   <div className="project-role">{proj.r}</div>
@@ -76,7 +91,8 @@ function PortfolioTabs({ activeTab, setActiveTab }) {
         {(activeTab === 'certificates' || activeTab === 'awards') && (
           <div className="cards-grid">
             {DATA[activeTab]?.map((item, idx) => (
-              <article className="project-card" key={idx}>
+              <article className={`project-card ${highlight === `${activeTab}-${idx}` ? 'is-focus' : ''}`} id={`pf-${activeTab}-${idx}`} key={idx}>
+                {item.img && <img className="pf-thumb" src={item.img} alt={item.t} loading="lazy" />}
                 <span className="project-badge">{activeTab === 'certificates' ? 'Kredensial' : 'Prestasi'}</span>
                 <h3>{item.t}</h3>
                 <p className="project-desc" style={{ marginTop: '8px' }}>{item.s}</p>

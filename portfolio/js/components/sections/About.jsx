@@ -35,13 +35,13 @@ function About({ showToast }) {
 
         <div className="btn-group">
           <button className="btn primary" type="button" onClick={handleDownloadCV}>
-            Unduh Resume / CV
+            View CV
           </button>
           <a className="btn" href="#portfolio" onClick={(e) => {
             e.preventDefault();
             document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
           }}>
-            Lihat Pengalaman
+            View Experience
           </a>
         </div>
       </div>

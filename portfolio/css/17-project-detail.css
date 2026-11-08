@@ -1,0 +1,129 @@
+/* ==========================================================================
+   HALAMAN DETAIL PROYEK / SERTIFIKAT
+   Dibuka dari kartu di dalam folder (Stats). Tombol Back / Esc untuk menutup.
+   ========================================================================== */
+.pd-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg, #070913);
+  color: var(--text, #f1f5f9);
+  animation: pd-fade 0.3s ease both;
+}
+@keyframes pd-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.pd-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(var(--primary-rgb), 0.22), transparent 70%);
+}
+.pd-blob-a { width: 520px; height: 520px; top: -160px; left: -140px; }
+.pd-blob-b { width: 620px; height: 620px; bottom: -220px; right: -160px; }
+
+.pd-page {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  animation: pd-rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes pd-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+/* Back + breadcrumb */
+.pd-nav { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 44px; font-size: 0.92rem; }
+.pd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.pd-back:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(var(--primary-rgb), 0.5); transform: translateX(-2px); }
+.pd-crumb { border: 0; background: none; padding: 0; font: inherit; color: rgba(241, 245, 249, 0.55); cursor: pointer; }
+.pd-crumb:hover { color: #fff; }
+.pd-sep { color: rgba(241, 245, 249, 0.4); flex: none; }
+.pd-current { color: #fff; font-weight: 500; }
+.pd-back:focus-visible, .pd-crumb:focus-visible, .pd-more:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+
+/* Dua kolom: teks kiri, gambar kanan */
+.pd-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+.pd-title { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 22px; color: #fff; }
+.pd-role { margin: -8px 0 18px; color: var(--accent); font-weight: 600; font-size: 0.95rem; }
+.pd-desc { margin: 0 0 18px; font-size: 1.06rem; line-height: 1.7; color: rgba(241, 245, 249, 0.78); }
+.pd-clamp { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 8px; }
+.pd-points { margin: 0 0 8px; padding-left: 20px; display: grid; gap: 10px; color: rgba(241, 245, 249, 0.78); line-height: 1.65; }
+.pd-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.98rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+.pd-more svg { transition: transform 0.25s ease; }
+.pd-more svg.is-up { transform: rotate(180deg); }
+
+.pd-tech { margin-top: 36px; }
+.pd-tech h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; font-size: 1.15rem; font-weight: 700; color: #fff; }
+.pd-tech h3 svg { color: rgba(241, 245, 249, 0.6); }
+.pd-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.pd-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(241, 245, 249, 0.9);
+  font-size: 0.92rem;
+}
+.pd-chip svg { color: rgba(241, 245, 249, 0.6); }
+
+/* Gambar dengan bingkai putih */
+.pd-media { position: sticky; top: 32px; }
+.pd-frame {
+  padding: 6px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 30px 70px -25px rgba(0, 0, 0, 0.8), 0 0 50px rgba(var(--primary-rgb), 0.18);
+}
+.pd-frame img { display: block; width: 100%; height: auto; max-height: 70vh; object-fit: contain; border-radius: 11px; background: #fff; }
+
+@media (max-width: 860px) {
+  .pd-page { padding: 28px 18px 64px; }
+  .pd-nav { margin-bottom: 28px; }
+  .pd-grid { grid-template-columns: 1fr; gap: 32px; }
+  .pd-media { position: static; order: -1; }
+  .pd-frame img { max-height: 55vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pd-overlay, .pd-page { animation: none; }
+}
+
+/* Spinner singkat saat halaman dibuka */
+.pd-loader { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.pd-loader span {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  border-top-color: var(--accent);
+  animation: pd-spin 0.8s linear infinite;
+}
+@keyframes pd-spin { to { transform: rotate(360deg); } }

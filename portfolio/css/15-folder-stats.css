@@ -21,7 +21,7 @@
   --f-back: color-mix(in srgb, var(--primary) 36%, #0a1124);
   --f-wall: color-mix(in srgb, var(--primary) 26%, #070b18);
   --f-floor: color-mix(in srgb, var(--primary) 20%, #050813);
-  --f-glass: rgba(var(--primary-rgb), 0.9);
+  --f-glass: rgba(var(--primary-rgb), 0.97);
   --f-paper: color-mix(in srgb, var(--accent) 10%, #f7f9fd);
   --f-paper-2: color-mix(in srgb, var(--accent) 24%, #e3ebf8);
   --f-bar: color-mix(in srgb, var(--primary) 36%, #cdd7e8);
@@ -34,7 +34,7 @@
 
 .folder-stage {
   position: relative;
-  height: 372px;
+  height: 480px;
   perspective: 1100px;
   perspective-origin: 50% 28%;
 }
@@ -103,11 +103,13 @@
   transition: background-color 0.45s ease;
 }
 .f3-wall-l {
+  border-bottom-right-radius: 22px;
   left: 0;
   transform: rotateY(-90deg);
   clip-path: polygon(0 0, 100% var(--step), 100% 100%, 0 100%);
 }
 .f3-wall-r {
+  border-bottom-left-radius: 22px;
   left: 100%;
   transform: rotateY(90deg);
   clip-path: polygon(0 var(--step), 100% 0, 100% 100%, 0 100%);
@@ -120,6 +122,7 @@
   height: var(--D);
   margin-bottom: calc(var(--D) / -2);
   background: var(--f-floor);
+  border-radius: 0 0 22px 22px; /* ikut lengkung sudut tutup depan */
   transform: rotateX(90deg);
   transition: background-color 0.45s ease;
 }
@@ -135,7 +138,7 @@
   box-shadow: 0 -3px 12px -4px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
   overflow: hidden;
   color: var(--f-ink);
-  transition: transform 0.5s var(--f-ease), background-color 0.45s ease;
+  transition: transform 0.5s var(--f-ease), height 0.5s var(--f-ease), background-color 0.45s ease;
 }
 .folder-card::before { /* garis aksen atas */
   content: "";
@@ -147,10 +150,10 @@
 }
 
 /* k = urutan dari depan. Makin ke belakang: makin sempit, makin tinggi, makin dalam */
-.fc-0 { --card-bg: var(--f-paper);                                                  left: 4%;   right: 4%;   top: 40px; transform: translate3d(0, 0, 14px); }
-.fc-1 { --card-bg: color-mix(in srgb, var(--accent) 14%, #eef3fb);                  left: 6.5%; right: 6.5%; top: 32px; transform: translate3d(0, 0, 5px); }
-.fc-2 { --card-bg: color-mix(in srgb, var(--accent) 22%, #e2eaf6);                  left: 9%;   right: 9%;   top: 24px; transform: translate3d(0, 0, -4px); }
-.fc-3 { --card-bg: color-mix(in srgb, var(--accent) 30%, #d4def0);                  left: 11.5%; right: 11.5%; top: 16px; transform: translate3d(0, 0, -13px); }
+.fc-0 { --card-bg: var(--f-paper);                                                  left: 9%; right: 9%; top: 40px; transform: translate3d(0, 0, 14px); }
+.fc-1 { --card-bg: color-mix(in srgb, var(--accent) 14%, #eef3fb);                  left: 9%; right: 9%; top: 32px; transform: translate3d(0, 0, 5px); }
+.fc-2 { --card-bg: color-mix(in srgb, var(--accent) 22%, #e2eaf6);                  left: 9%; right: 9%; top: 24px; transform: translate3d(0, 0, -4px); }
+.fc-3 { --card-bg: color-mix(in srgb, var(--accent) 30%, #d4def0);                  left: 9%; right: 9%; top: 16px; transform: translate3d(0, 0, -13px); }
 
 .card-head {
   position: relative;
@@ -193,6 +196,16 @@
 .card-more { display: inline-block; margin-top: 4px; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; opacity: 0.55; }
 
 /* kartu bergambar (isi DATA.item.img) */
+.folder-card { pointer-events: none; }
+.folder-card { height: 140px; }
+.folder-card.has-img::before { display: none; }
+.folder-card.has-img { background-position: top center; border: 1px solid rgba(255, 255, 255, 0.5); }
+/* saat terbuka kartu memanjang ke atas (tinggi bertambah, posisi bawah tetap di dalam folder) */
+.folder-item.is-open .folder-card { height: 215px; }
+.folder-card { transform-origin: 50% 100%; }
+.folder-item.is-open .folder-card:not(.is-ghost) { pointer-events: auto; cursor: pointer; }
+.folder-item.is-open .folder-card:not(.is-ghost):hover { filter: brightness(1.08); }
+.folder-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .folder-card.has-img .card-head {
   background: rgba(6, 10, 26, 0.72);
   color: #fff;
@@ -294,12 +307,22 @@
 .folder-item.is-open .folder-card,
 .folder-item.is-open .folder-flap { transition-duration: 0.7s; transition-timing-function: var(--f-spring); }
 
-.folder-item.is-open .fc-0 { transform: translate3d(0, -79px, 14px); }
-.folder-item.is-open .fc-1 { transform: translate3d(0, -93px, 5px);  transition-delay: 0.04s; }
-.folder-item.is-open .fc-2 { transform: translate3d(0, -107px, -4px); transition-delay: 0.08s; }
-.folder-item.is-open .fc-3 { transform: translate3d(0, -121px, -13px); transition-delay: 0.12s; }
+/* Hover (belum diklik): kartu naik sedikit mengintip */
+.folder-item.is-peek:not(.is-open) .fc-0 { transform: translate3d(0, -16px, 14px); }
+.folder-item.is-peek:not(.is-open) .fc-1 { transform: translate3d(0, -22px, 5px); }
+.folder-item.is-peek:not(.is-open) .fc-2 { transform: translate3d(0, -28px, -4px); }
+.folder-item.is-peek:not(.is-open) .fc-3 { transform: translate3d(0, -34px, -13px); }
+.folder-item.is-peek:not(.is-open) .folder-flap { transform: translateZ(calc(var(--D) / 2)) rotateX(-5deg); }
+
+/* Klik: kartu terbuka melebar seperti kipas kartu remi (berporos di bawah) */
+.folder-item.is-open .fc-0 { transform: translate3d(0, -112px, 14px) rotate(17deg); }
+.folder-item.is-open .fc-1 { transform: translate3d(0, -104px, 5px) rotate(6deg);   transition-delay: 0.04s; }
+.folder-item.is-open .fc-2 { transform: translate3d(0, -96px, -4px) rotate(-6deg);  transition-delay: 0.08s; }
+.folder-item.is-open .fc-3 { transform: translate3d(0, -88px, -13px) rotate(-17deg); transition-delay: 0.12s; }
 .folder-item.is-open .folder-flap { transform: translateZ(calc(var(--D) / 2)) rotateX(-16deg); }
 .folder-item.is-open .folder-go { transform: rotate(180deg); }
+.f3-wall { transition: opacity 0.3s ease, background-color 0.45s ease; }
+.folder-item.is-open .f3-wall { opacity: 0; }
 
 @media (max-width: 380px) {
   .folder-item { --H: 190px; }
@@ -309,3 +332,5 @@
 @media (prefers-reduced-motion: reduce) {
   .folder-3d, .folder-card, .folder-flap, .folder-go, .folder-ground { transition-duration: 0.01ms !important; }
 }
+
+.card-title-solo { position: absolute; inset: auto 12px 12px 12px; font-size: 0.8rem; font-weight: 700; }

@@ -38,6 +38,7 @@ const DATA = {
   projects: [
     {
       t: "Website Portal Magang",
+      img: "./assets/prototype/MagangMatch.png",
       r: "Front-End Developer • Semester 4",
       d: "Platform komprehensif untuk pencarian, pelamaran, dan manajemen informasi magang mahasiswa dengan antarmuka yang bersih dan terstruktur.",
       p: [
@@ -49,6 +50,7 @@ const DATA = {
     },
     {
       t: "Website Lab NCS",
+      img: "./assets/prototype/lab ncs.png",
       r: "Documenter & UI Designer • Semester 3",
       d: "Penyusunan blueprint dokumentasi teknis sistem dan perancangan awal antarmuka website laboratorium komputasi.",
       p: [
@@ -57,9 +59,35 @@ const DATA = {
         "Berkoordinasi aktif dengan rekan tim developer untuk memastikan hasil koding konsisten dengan desain."
       ],
       s: ["Figma", "Wireframing", "Notion", "Dokumentasi", "UI/UX"]
+    },
+    {
+      t: "FinMind",
+      img: "./assets/prototype/FinMind.png",
+      r: "Prototype Aplikasi Mobile",
+      d: "Prototype aplikasi mobile FinMind dengan layar pembuka (onboarding) yang sederhana.",
+      p: [
+        "Merancang tampilan layar pembuka aplikasi lengkap dengan logo dan tombol Mulai.",
+        "Menyusun antarmuka mobile yang bersih dan mudah dipahami."
+      ],
+      s: ["Mobile App", "UI/UX"]
+    },
+    {
+      t: "PICO",
+      img: "./assets/prototype/pico.jpeg",
+      r: "Prototype Game",
+      d: "Prototype game PICO dengan menu utama bergaya kartun.",
+      p: [
+        "Merancang menu utama dengan pilihan Play, Settings, dan Quit.",
+        "Menyusun tampilan antarmuka game yang berwarna dan mudah dikenali."
+      ],
+      s: ["Game", "UI Design"]
     }
   ],
   certificates: [
+    { t: "NVIDIA - Building LLM Applications With Prompt Engineering", s: "Certificate of Competency • NVIDIA • November 2025", img: "./assets/sertifikat/nvidia.png" },
+    { t: "Global Game Jam 2026 Malang", s: "Participant • Game development challenge 48 jam", img: "./assets/sertifikat/gjm.png" },
+    { t: "Polinema Bridge Tournament 2026", s: "Panitia • UKM Olah Raga Politeknik Negeri Malang", img: "./assets/sertifikat/bridge.png" },
+    { t: "Polinema Bridge Tournament 2025", s: "Panitia • UKM Olah Raga Politeknik Negeri Malang", img: "./assets/sertifikat/pbt.png" },
     { t: "Dasar Pemrograman Web", s: "Dicoding Academy • Menguasai semantik HTML5, CSS3 Grid/Flexbox, dan JavaScript ES6" },
     { t: "Belajar Membuat Aplikasi Flutter untuk Pemula", s: "Dicoding Academy • Fondasi arsitektur widget, state management dasar, dan layouting mobile" }
   ],

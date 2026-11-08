@@ -2,6 +2,7 @@ function App() {
   const [currentTheme, setCurrentTheme] = useState(() => localStorage.getItem('bubu_portfolio_theme') || 'blue');
   const [activeSection, setActiveSection] = useState('home');
   const [activePortfolioTab, setActivePortfolioTab] = useState('projects');
+  const [detail, setDetail] = useState(null); // { key, idx } item yang dibuka di halaman detail
   const [toast, setToast] = useState({ show: false, message: '' });
   const toastTimeoutRef = useRef(null);
 
@@ -62,7 +63,7 @@ function App() {
           <div className="wrap">
             <About showToast={showToast} />
             <Timeline />
-            <Stats onSelectTab={(t) => setActivePortfolioTab(t)} />
+            <Stats onSelectItem={(key, idx) => setDetail({ key, idx })} />
           </div>
         </section>
 
@@ -83,6 +84,7 @@ function App() {
       <BackToTop />
 
       <Toast toast={toast} />
+      <ProjectDetail detail={detail} onClose={() => setDetail(null)} />
     </React.Fragment>
   );
 }

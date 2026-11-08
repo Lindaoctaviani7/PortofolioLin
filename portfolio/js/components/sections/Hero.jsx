@@ -37,8 +37,8 @@ function Hero({ onExploreProjects }) {
   return (
     <div className="hero-content">
       <h1>
-        <span className="theme-text">Thinking in Code,</span><br />
-        <span className="hero-subtext">Creating with Purpose</span>
+        <span className="theme-text">Welcome to</span><br />
+        <span className="hero-subtext">My Portfolio</span>
       </h1>
 
       <div className="typed-wrapper">
@@ -61,7 +61,7 @@ function Hero({ onExploreProjects }) {
       </div>
 
       <div className="social-strip">
-        <span className="label">Temukan saya di:</span>
+        <span className="label">Find me :</span>
         <div className="social-links">
           {DATA.socials.map((social) => (
             <a

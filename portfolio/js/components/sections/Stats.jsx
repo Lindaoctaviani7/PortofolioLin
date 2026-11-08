@@ -1,13 +1,13 @@
-function Stats({ onSelectTab }) {
+function Stats({ onSelectItem }) {
   const statsRef = useRef(null);
   const [counts, setCounts] = useState({ projects: 0, certificates: 0 });
   const [openKey, setOpenKey] = useState(null);   // dipasang lewat klik/tap
-  const [hoverKey, setHoverKey] = useState(null);  // sementara saat hover mouse
+  const [hoverKey, setHoverKey] = useState(null);  // hover mouse: kartu hanya mengintip naik
 
   // Folder yang ditampilkan (urutan = urutan kartu)
   const folders = [
     { key: 'projects', lines: ['projects'] },
-    { key: 'certificates',lines: ['certificates'] }
+    { key: 'certificates', lines: ['certificates'] }
   ];
 
   useEffect(() => {
@@ -51,27 +51,27 @@ function Stats({ onSelectTab }) {
     };
   }, []);
 
-  const handleGo = (key) => {
-    onSelectTab(key);
-    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  // Buka halaman detail untuk item yang diklik (idx = urutan di DATA[key])
+  const handleGo = (key, idx) => onSelectItem(key, idx);
 
   return (
     <div className="stats-grid" id="stats" ref={statsRef}>
       {folders.map((f) => {
         const pinned = openKey === f.key;
-        const isOpen = pinned || hoverKey === f.key;
-        const list = DATA[f.key] || [];
+        const isOpen = pinned;
+        const all = (DATA[f.key] || []).map((it, idx) => ({ ...it, idx }));
+        const withImg = all.filter((it) => it.img);
+        const list = withImg.length ? withImg : all;
         const shown = list.slice(0, 4);
         const extra = list.length - shown.length;
         // Kartu isi folder, urut dari yang paling depan. Minimal 3 lapis agar susunan tetap rapi.
-        const cards = shown.map((it) => ({ t: it.t, sub: it.s || it.r || '', img: it.img }));
+        const cards = shown.map((it) => ({ t: it.t, sub: it.r || (typeof it.s === 'string' ? it.s : ''), img: it.img, idx: it.idx }));
         while (cards.length < 3) cards.push({ ghost: true });
 
         return (
           <div
             key={f.key}
-            className={`folder-item ${isOpen ? 'is-open' : ''}`}
+            className={`folder-item ${isOpen ? 'is-open' : ''} ${!isOpen && hoverKey === f.key ? 'is-peek' : ''}`}
             onClick={() => setOpenKey(pinned ? null : f.key)}
             onPointerEnter={(e) => { if (e.pointerType === 'mouse') setHoverKey(f.key); }}
             onPointerLeave={() => setHoverKey(null)}
@@ -91,30 +91,15 @@ function Stats({ onSelectTab }) {
                   <div
                     key={k}
                     className={`folder-card fc-${k} ${c.img ? 'has-img' : ''} ${c.ghost ? 'is-ghost' : ''}`}
-                    style={c.img ? { backgroundImage: `url(${c.img})` } : undefined}
+                    style={c.img ? { backgroundImage: `url("${encodeURI(c.img)}")` } : undefined}
                     aria-hidden={c.ghost ? 'true' : undefined}
+                    role={c.ghost ? undefined : 'link'}
+                    tabIndex={!c.ghost && isOpen ? 0 : -1}
+                    aria-label={c.ghost ? undefined : `Buka ${c.t} di portofolio`}
+                    onClick={c.ghost ? undefined : (e) => { e.stopPropagation(); if (isOpen) handleGo(f.key, c.idx); }}
+                    onKeyDown={c.ghost ? undefined : (e) => { if (isOpen && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); e.stopPropagation(); handleGo(f.key, c.idx); } }}
                   >
-                    <div className="card-head">
-                      {c.ghost ? <i className="ghost-bar" /> : <span className="card-title">{c.t}</span>}
-                      {k === 0 ? (
-                        <button
-                          type="button"
-                          className="paper-go"
-                          tabIndex={isOpen ? 0 : -1}
-                          onClick={(e) => { e.stopPropagation(); handleGo(f.key); }}
-                        >
-                          Buka ›
-                        </button>
-                      ) : (
-                        <span className="card-idx">{String(k + 1).padStart(2, '0')}</span>
-                      )}
-                    </div>
-                    {k === 0 && !c.img && (
-                      <div className="card-body">
-                        <p className="card-sub">{c.sub}</p>
-                        {extra > 0 && <span className="card-more">+{extra} lainnya</span>}
-                      </div>
-                    )}
+                    {!c.img && !c.ghost && <span className="card-title card-title-solo">{c.t}</span>}
                   </div>
                 ))}
 
