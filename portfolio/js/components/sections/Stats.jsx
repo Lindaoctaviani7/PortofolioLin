@@ -6,8 +6,8 @@ function Stats({ onSelectTab }) {
 
   // Folder yang ditampilkan (urutan = urutan kartu)
   const folders = [
-    { key: 'projects', tag: '#proyek', lines: ['proyek', 'selesai'], sub: 'Solusi nyata yang telah dibuat' },
-    { key: 'certificates', tag: '#sertifikasi', lines: ['sertifikasi'], sub: 'Kompetensi terverifikasi' }
+    { key: 'projects', lines: ['projects'] },
+    { key: 'certificates',lines: ['certificates'] }
   ];
 
   useEffect(() => {
@@ -128,7 +128,6 @@ function Stats({ onSelectTab }) {
                   >
                     <span className="folder-top">
                       <span className="folder-tag">{f.tag}</span>
-                      <span className="folder-count">{counts[f.key]}</span>
                     </span>
                     <span className="folder-bottom">
                       <span className="folder-text">

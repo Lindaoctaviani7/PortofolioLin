@@ -31,9 +31,9 @@ const DATA = {
     }
   ],
   experience: [
-    { t: "Staf Magang Liburan Semester", s: "Badan Pertanahan Nasional (BPN)", y: "Periodik Liburan", i: "B" },
-    { t: "Front-End Web Developer", s: "Website Portal Magang (Project-Based Learning)", y: "Semester 4", i: "F" },
-    { t: "Documenter & UI Designer", s: "Website Lab NCS (Project-Based Learning)", y: "Semester 3", i: "N" }
+    { t: "Staf Magang Liburan Semester", s: "Badan Pertanahan Nasional (BPN)", y: "Periodik Liburan", logo: "./assets/logo/bpn.jpg", i: "B" },
+    { t: "UKM Olah Raga Politeknik Negeri Malang", s: "Anggota", y: "2025 – Sekarang", logo: "./assets/logo/olahraga.jpg", i: "O" },
+    { t: "UKM Kerohanian Islam Politeknik Negeri Malang", s: "Anggota", y: "2025 – Sekarang", logo: "./assets/logo/rispol.jpg", i: "R" }
   ],
   projects: [
     {

@@ -1,8 +1,19 @@
 /* ==========================================================================
-   BUKU 3D INTERAKTIF (periwinkle) - klik untuk membuka, tampil logo skill
+   BUKU 3D INTERAKTIF (warna mengikuti tema) - klik untuk membuka, tampil logo skill
    Ukuran dasar: halaman 260 x 340, tebal 46 (px), diskalakan lewat JS
    ========================================================================== */
 .tech-book-card {
+  /* Warna buku mengikuti tema aksen (--primary / --primary-rgb) */
+  --bk-hi: color-mix(in srgb, var(--primary) 72%, #fff);
+  --bk-mid: color-mix(in srgb, var(--primary) 88%, #fff);
+  --bk-base: var(--primary);
+  --bk-lo: color-mix(in srgb, var(--primary) 78%, #000);
+  --bk-deep: color-mix(in srgb, var(--primary) 58%, #000);
+  --bk-dark1: color-mix(in srgb, var(--primary) 28%, #070913);
+  --bk-dark2: color-mix(in srgb, var(--primary) 14%, #070913);
+  --bk-light: color-mix(in srgb, var(--primary) 55%, #fff);
+  --bk-pale: color-mix(in srgb, var(--primary) 10%, #fff);
+  --bk-pale2: color-mix(in srgb, var(--primary) 16%, #e8e8f0);
   background: transparent;
   border: none;
   padding: 8px 0;
@@ -42,7 +53,7 @@
   width: 78%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(128, 134, 245, 0.34) 0%, rgba(128, 134, 245, 0.12) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--primary-rgb), 0.34) 0%, rgba(var(--primary-rgb), 0.12) 45%, transparent 70%);
   filter: blur(14px);
   pointer-events: none;
   animation: bkGlowPulse 5s ease-in-out infinite alternate;
@@ -124,7 +135,7 @@
   margin: 28px 0 0 -120px;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(120, 126, 240, 0.55) 0%, rgba(120, 126, 240, 0.18) 50%, transparent 72%);
+  background: radial-gradient(ellipse at center, rgba(var(--primary-rgb), 0.55) 0%, rgba(var(--primary-rgb), 0.18) 50%, transparent 72%);
   filter: blur(8px);
   transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   animation: bkShadow 6s ease-in-out infinite;
@@ -186,7 +197,7 @@
   transform: translateZ(-23px) rotateY(180deg);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  background: linear-gradient(225deg, #6f76e6, #5a61d2);
+  background: linear-gradient(225deg, var(--bk-base), var(--bk-lo));
   border-radius: 16px 8px 8px 16px;
 }
 
@@ -197,7 +208,7 @@
   width: 46px;
   height: 340px;
   transform: translateX(-23px) rotateY(-90deg);
-  background: linear-gradient(90deg, #5359cb 0%, #8188f4 45%, #6269df 70%, #4f55c4 100%);
+  background: linear-gradient(90deg, var(--bk-deep) 0%, var(--bk-mid) 45%, var(--bk-base) 70%, var(--bk-deep) 100%);
   border-radius: 10px 0 0 10px;
 }
 
@@ -242,8 +253,8 @@
   transform: translateZ(20px);
   transform-style: preserve-3d;
   background:
-    linear-gradient(90deg, rgba(60, 64, 140, 0.2) 0, transparent 22px),
-    linear-gradient(135deg, #f6f6fc, #e5e6f4);
+    linear-gradient(90deg, rgba(var(--primary-rgb), 0.22) 0, transparent 22px),
+    linear-gradient(135deg, var(--bk-pale), var(--bk-pale2));
   border-radius: 0 8px 8px 0;
 }
 
@@ -255,11 +266,11 @@
   height: 330px;
   transform-origin: left center;
   transform: translateZ(21px);
-  background: linear-gradient(100deg, #e9eaf6, #ffffff 40%, #ececf7);
+  background: linear-gradient(100deg, var(--bk-pale2), #ffffff 40%, var(--bk-pale));
   border-radius: 0 8px 8px 0;
   opacity: 0;
   pointer-events: none;
-  box-shadow: 0 0 16px rgba(80, 86, 200, 0.35);
+  box-shadow: 0 0 16px rgba(var(--primary-rgb), 0.35);
 }
 
 .bk-book.is-open .bk-sheet {
@@ -337,10 +348,10 @@
 .bk-cover-out {
   background:
     linear-gradient(115deg, rgba(255, 255, 255, 0.22) 0%, transparent 38%),
-    linear-gradient(145deg, #8d93f7 0%, #7f86f0 45%, #7078e8 100%);
+    linear-gradient(145deg, var(--bk-hi) 0%, var(--bk-mid) 45%, var(--bk-base) 100%);
   box-shadow:
     inset 0 0 0 2px rgba(255, 255, 255, 0.16),
-    inset -6px -8px 18px rgba(63, 69, 190, 0.35),
+    inset -6px -8px 18px rgba(0, 0, 0, 0.28),
     inset 4px 4px 14px rgba(255, 255, 255, 0.18);
   overflow: hidden;
 }
@@ -353,7 +364,7 @@
   top: 0;
   bottom: 0;
   width: 7px;
-  background: linear-gradient(90deg, rgba(60, 66, 180, 0.35), rgba(255, 255, 255, 0.18), rgba(60, 66, 180, 0.12));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.28), rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.1));
 }
 
 /* Kilau yang menyapu sampul */
@@ -385,9 +396,9 @@
   transform: rotateY(180deg);
   transform-style: preserve-3d;
   background:
-    linear-gradient(270deg, rgba(60, 64, 140, 0.2) 0, transparent 22px),
-    linear-gradient(225deg, #f6f6fc, #e5e6f4);
-  box-shadow: inset 0 0 0 5px #7e85ef;
+    linear-gradient(270deg, rgba(var(--primary-rgb), 0.22) 0, transparent 22px),
+    linear-gradient(225deg, var(--bk-pale), var(--bk-pale2));
+  box-shadow: inset 0 0 0 5px var(--bk-base);
 }
 
 /* ---------- Dekorasi halaman ---------- */
@@ -395,7 +406,7 @@
   position: absolute;
   inset: 30px 26px 30px 34px;
   background:
-    repeating-linear-gradient(180deg, transparent 0 21px, rgba(100, 108, 220, 0.16) 21px 22px);
+    repeating-linear-gradient(180deg, transparent 0 21px, rgba(var(--primary-rgb), 0.18) 21px 22px);
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
 }
@@ -459,10 +470,10 @@
   display: grid;
   place-items: center;
   border-radius: 17px;
-  background: linear-gradient(150deg, #1d2250, #0f1330);
+  background: linear-gradient(150deg, var(--bk-dark1), var(--bk-dark2));
   border: 1px solid var(--bc);
   box-shadow:
-    0 14px 22px -8px rgba(60, 66, 200, 0.7),
+    0 14px 22px -8px rgba(var(--primary-rgb), 0.7),
     0 0 16px -2px var(--bc),
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
@@ -471,7 +482,7 @@
 .bk-glyph:hover {
   transform: scale(1.25) rotate(-5deg);
   box-shadow:
-    0 20px 30px -8px rgba(60, 66, 200, 0.8),
+    0 20px 30px -8px rgba(var(--primary-rgb), 0.8),
     0 0 28px 3px var(--gc),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
@@ -491,7 +502,7 @@
   width: 420px;
   height: 275px;
   z-index: 0;
-  background: linear-gradient(0deg, rgba(160, 166, 255, 0.45), rgba(128, 134, 245, 0.1) 60%, transparent);
+  background: linear-gradient(0deg, rgba(var(--primary-rgb), 0.45), rgba(var(--primary-rgb), 0.1) 60%, transparent);
   clip-path: polygon(41% 100%, 59% 100%, 100% 0, 0 0);
   filter: blur(7px);
   opacity: 0;
@@ -525,8 +536,8 @@
   margin: -130px 0 0 -130px;
   z-index: 0;
   border-radius: 50%;
-  border: 3px solid rgba(160, 166, 255, 0.8);
-  box-shadow: 0 0 40px rgba(128, 134, 245, 0.7), inset 0 0 40px rgba(128, 134, 245, 0.4);
+  border: 3px solid rgba(var(--primary-rgb), 0.8);
+  box-shadow: 0 0 40px rgba(var(--primary-rgb), 0.7), inset 0 0 40px rgba(var(--primary-rgb), 0.4);
   pointer-events: none;
   animation: bkBurst 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
 }
@@ -554,8 +565,8 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #b9bdff;
-  box-shadow: 0 0 10px 2px rgba(160, 166, 255, 0.9);
+  background: var(--bk-light);
+  box-shadow: 0 0 10px 2px rgba(var(--primary-rgb), 0.9);
   opacity: 0;
   animation: bkSpark 4.2s ease-in-out infinite;
   animation-delay: calc(var(--n) * 0.47s);
@@ -628,9 +639,9 @@
 
 .book-toggle-pill:hover,
 .book-toggle-pill.active {
-  background: #7f86f0;
+  background: var(--primary);
   color: #fff;
-  box-shadow: 0 4px 18px rgba(127, 134, 240, 0.5);
+  box-shadow: 0 4px 18px rgba(var(--primary-rgb), 0.5);
   transform: scale(1.05);
 }
 

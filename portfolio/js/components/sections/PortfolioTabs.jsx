@@ -4,7 +4,6 @@ function PortfolioTabs({ activeTab, setActiveTab }) {
   const tabs = [
     { key: 'projects', label: 'Proyek' },
     { key: 'certificates', label: 'Sertifikat' },
-    { key: 'awards', label: 'Penghargaan' },
     { key: 'stack', label: 'Tech Stack' }
   ];
 
