@@ -33,8 +33,8 @@ function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{children}</svg>
   );
   const tabs = [
-    { key: 'projects', label: 'Proyek', icon: ic(<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" />) },
-    { key: 'certificates', label: 'Sertifikat', icon: ic(<React.Fragment><circle cx="12" cy="9" r="5.5" /><path d="M8.5 13.5L7 21l5-3 5 3-1.5-7.5" /></React.Fragment>) },
+    { key: 'projects', label: 'Projects', icon: ic(<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" />) },
+    { key: 'certificates', label: 'Certificates', icon: ic(<React.Fragment><circle cx="12" cy="9" r="5.5" /><path d="M8.5 13.5L7 21l5-3 5 3-1.5-7.5" /></React.Fragment>) },
     { key: 'stack', label: 'Tech Stack', icon: ic(<React.Fragment><rect x="6" y="6" width="12" height="12" rx="2" /><rect x="9.5" y="9.5" width="5" height="5" rx="0.8" /><path d="M9 2.5v3M15 2.5v3M9 18.5v3M15 18.5v3M2.5 9h3M2.5 15h3M18.5 9h3M18.5 15h3" /></React.Fragment>) }
   ];
 
@@ -92,7 +92,7 @@ function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
                 <div className="chips-cloud">
                   {skills.map((skill, sIdx) => (
                     <span className={`chip ${skill.isLearning ? 'learning' : ''}`} key={sIdx}>
-                      {skill.name} {skill.isLearning ? '✦ (Sedang didalami)' : ''}
+                      {skill.name} {skill.isLearning ? '✦ (Currently Learning)' : ''}
                     </span>
                   ))}
                 </div>

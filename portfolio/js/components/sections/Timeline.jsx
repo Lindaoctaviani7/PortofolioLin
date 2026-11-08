@@ -2,7 +2,7 @@ function Timeline() {
   return (
     <div className="timeline-grid">
       <div className="timeline-box">
-        <h3>Pendidikan</h3>
+        <h3>Education</h3>
         <div className="timeline-items">
           {DATA.education.map((item, index) => (
             <div className="timeline-item" key={index}>
@@ -24,7 +24,7 @@ function Timeline() {
       </div>
 
       <div className="timeline-box">
-        <h3>Pengalaman</h3>
+        <h3>Experience</h3>
         <div className="timeline-items">
           {DATA.experience.map((item, index) => (
             <div className="timeline-item" key={index}>

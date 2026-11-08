@@ -20,7 +20,7 @@ function Preloader() {
   // Persen: naik halus sampai ~92%, lalu 100% setelah halaman selesai dimuat
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const MIN = reduce ? 800 : 4600;
+    const MIN = reduce ? 800 : 2700;
     const start = performance.now();
     let loaded = document.readyState === 'complete';
     let cur = 0, raf; const timers = [];

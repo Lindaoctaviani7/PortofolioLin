@@ -3,7 +3,7 @@ function MobileDock({ activeSection, setActiveSection }) {
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'portfolio', label: 'Portofolio' },
-    { id: 'contact', label: 'Kontak' }
+    { id: 'contact', label: 'Contact' }
   ];
 
   const handleDockClick = (e, id) => {
