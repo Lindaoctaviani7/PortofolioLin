@@ -50,13 +50,13 @@ function Hero({ onExploreProjects }) {
 
       <div className="btn-group">
         <button className="btn primary" type="button" onClick={onExploreProjects}>
-          Eksplor Proyek
+          Explore Projects
         </button>
         <a className="btn" href="#contact" onClick={(e) => {
           e.preventDefault();
           document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         }}>
-          Hubungi Saya
+          Contact Me
         </a>
       </div>
 
