@@ -30,8 +30,8 @@ function About({ showToast }) {
   return (
     <div className="about-hero">
       <div className="about-text">
-        <span className="section-tag">Aboute Me</span>
-        <h2>Hi, I'm <span className="gradient-text">{DATA.name}</span></h2>
+        <span className="section-tag">Tentang Saya</span>
+        <h2>Hai, perkenalkan saya <span className="gradient-text">{DATA.name}</span></h2>
         <p>{DATA.about}</p>
 
         <div className="btn-group">
@@ -65,6 +65,7 @@ function About({ showToast }) {
             <div className="avatar-initial">{DATA.name[0]}</div>
           )}
           <div className="avatar-tag">
+            <span className="status-pulse"></span>
             <span>Front-End Dev &amp; UI/UX</span>
           </div>
         </div>

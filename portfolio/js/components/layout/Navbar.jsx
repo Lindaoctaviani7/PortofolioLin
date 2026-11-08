@@ -39,6 +39,7 @@ function Navbar({ activeSection, setActiveSection, currentTheme, setCurrentTheme
 
   const handleThemeChange = (themeId) => {
     setCurrentTheme(themeId);
+    showToast(`Tema aksen diubah ke ${themeId.toUpperCase()}`);
   };
 
   return (

@@ -1,5 +1,5 @@
 const DATA = {
-  name: "Linda Octaviani",
+  name: "Linda",
   fullName: "Linda Octaviani",
   roles: [
     "Front-End Developer",
@@ -12,8 +12,8 @@ const DATA = {
   resume: "",
   socials: [
     { name: "GitHub", url: "github.com/Lindaoctaviani7", fullUrl: "https://github.com/Lindaoctaviani7", type: "github" },
-    { name: "LinkedIn", url: "linkedin.com/in/linda-octaviani", fullUrl: "https://www.linkedin.com/in/linda-octaviani-b22905313?utm_source=share_via&utm_content=profile&utm_medium=member_android", type: "linkedin" },
-    { name: "Instagram", url: "instagram.com/lindaoctavia._", fullUrl: "https://www.instagram.com/lindaoctavia._?psln=ODg5ZTNlbjFobjR1", type: "instagram" }
+    { name: "LinkedIn", url: "linkedin.com/in/linda-octaviani1", fullUrl: "https://www.linkedin.com/in/linda-octaviani-b22905313?utm_source=share_via&utm_content=profile&utm_medium=member_android123", type: "linkedin" },
+    { name: "Instagram", url: "instagram.com/lindaoctavia._1", fullUrl: "https://www.instagram.com/lindaoctavia._?utm_source=qr&rpxt=ODg5ZTNlbjFobjR123", type: "instagram" }
   ],
   education: [
     {
@@ -40,7 +40,7 @@ const DATA = {
     {
       t: "Website Portal Magang",
       // Isi url dengan link GitHub / Figma proyek ini (kosong = memakai tautan bawaan: profil GitHub / figma.com)
-      links: [{ type: "github", url: "https://github.com/ibnuzzi/PBL_Magang.git" }, { type: "figma", url: "https://www.figma.com/design/sh8hVmTDgyzSC3xsQZB5AG/MagangMatch-SiMagang-JTI?node-id=0-1&t=5vxMSSIMDqQ6Q6ov-1" }],
+      links: [{ type: "github", url: "https://github.com/Lindaoctaviani7" }, { type: "figma", url: "" }],
       img: "./assets/prototype/MagangMatch.png",
       r: "Front-End Developer • Semester 4",
       d: "Platform komprehensif untuk pencarian, pelamaran, dan manajemen informasi magang mahasiswa dengan antarmuka yang bersih dan terstruktur.",
@@ -49,12 +49,12 @@ const DATA = {
         "Mengintegrasikan UI dengan RESTful API backend dan database relasional MySQL.",
         "Mengoptimalkan layout agar nyaman diakses di smartphone, tablet, maupun layar desktop resolusi tinggi."
       ],
-      s: ["HTML5", "CSS3", "JavaScript", "PHP", "Laravel", "MySQL", "Figma"]
+      s: ["PHP", "Laravel", "MySQL", "GitHub", "Figma", "Canva"]
     },
     {
       t: "Website Lab NCS",
       // Isi url dengan link GitHub / Figma proyek ini (kosong = memakai tautan bawaan: profil GitHub / figma.com)
-      links: [{ type: "github", url: "https://github.com/ibnuzzi/PBL_LAB_NCS_TI-2A.git" }, { type: "figma", url: "https://www.figma.com/design/pWacbfr75yFBlwqtap35Uz/LAB-NCS?t=5vxMSSIMDqQ6Q6ov-1" }],
+      links: [{ type: "github", url: "https://github.com/Lindaoctaviani7" }, { type: "figma", url: "" }],
       img: "./assets/prototype/lab ncs.png",
       r: "Documenter & UI Designer • Semester 3",
       d: "Penyusunan blueprint dokumentasi teknis sistem dan perancangan awal antarmuka website laboratorium komputasi.",
@@ -63,12 +63,12 @@ const DATA = {
         "Membangun struktur informasi, wireframe low-fidelity, dan rancangan mockups antarmuka.",
         "Berkoordinasi aktif dengan rekan tim developer untuk memastikan hasil koding konsisten dengan desain."
       ],
-      s: ["Figma", "Wireframing", "Notion", "Dokumentasi", "UI/UX"]
+      s: ["PHP", "CSS", "PLpgSQL", "JavaScript", "GitHub", "Figma", "Canva"]
     },
     {
       t: "FinMind",
       // Isi url dengan link GitHub / Figma proyek ini (kosong = memakai tautan bawaan: profil GitHub / figma.com)
-      links: [{ type: "github", url: "https://github.com/rahmanlana26/PBL_FINMIND.git" }, { type: "figma", url: "https://www.figma.com/design/qQFMV4kjZNhQy0U2dyPqBG/FinMind?t=5vxMSSIMDqQ6Q6ov-1" }],
+      links: [{ type: "github", url: "https://github.com/Lindaoctaviani7" }, { type: "figma", url: "" }],
       img: "./assets/prototype/FinMind.png",
       imgPos: "50% 46%", // bagian gambar yang tampil di kartu (logo FinMind ada di tengah)
       r: "Prototype Aplikasi Mobile",
@@ -77,7 +77,7 @@ const DATA = {
         "Merancang tampilan layar pembuka aplikasi lengkap dengan logo dan tombol Mulai.",
         "Menyusun antarmuka mobile yang bersih dan mudah dipahami."
       ],
-      s: ["Mobile App", "UI/UX"]
+      s: ["Dart", "Python", "C++", "CMake", "HTML", "Swift", "C", "Kotlin", "Figma", "GitHub", "Canva"]
     },
     {
       t: "PICO",
@@ -146,10 +146,10 @@ const DATA = {
   ],
   gallery: [
     { title: "Magang di BPN", desc: "Kebersamaan bersama tim di sela magang", img: "./assets/kegiatan/bpn.jpeg", gradient: "#065f46, #06241b" },
-    { title: "Lomba memperingati 17 Agustus di BPN", desc: "Merayakan hari kemerdekaan bersama keluarga besar BPN", img: "./assets/kegiatan/17 bpn.jpeg", gradient: "#9a3412, #2e1106" },
-    { title: "Kerja Tim PBL Semester 3", desc: "Demo proyek bersama tim", img: "./assets/kegiatan/pbl sem 3.jpeg", gradient: "#581c87, #1e1035" },
+    { title: "Upacara 17 Agustus di BPN", desc: "Merayakan hari kemerdekaan bersama keluarga besar BPN", img: "./assets/kegiatan/17 bpn.jpeg", gradient: "#9a3412, #2e1106" },
+    { title: "Kerja Tim PBL Semester 3", desc: "Demo proyek bersama tim Teknologi Informasi", img: "./assets/kegiatan/pbl sem 3.jpeg", gradient: "#581c87, #1e1035" },
     { title: "Global Game Jam 2026", desc: "Game jam 48 jam bersama tim", img: "./assets/kegiatan/gjm.jpeg", gradient: "#1e3a8a, #0f172a" },
-    { title: "Polinema Bridge Tournament", img: "./assets/kegiatan/bridge.jpeg", imgPos: "center 30%", gradient: "#831843, #2c0717" }
+    { title: "Polinema Bridge Tournament", desc: "Bersama panitia dan para juara", img: "./assets/kegiatan/bridge.jpeg", imgPos: "center 30%", gradient: "#831843, #2c0717" }
   ],
   playlist: [
     { title: "Deep Focus", artist: "Lo-fi Beats", color: "#3b82f6", duration: "02:45" },

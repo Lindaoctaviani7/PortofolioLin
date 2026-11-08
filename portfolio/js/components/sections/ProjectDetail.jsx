@@ -25,7 +25,15 @@ function ProjectDetail({ detail, onClose }) {
   const description = isProject ? item.d : item.s;
   const extra = isProject ? (item.p || []) : [];
   const techs = isProject ? (item.s || []) : [];
-  const findTech = (name) => (typeof TECH_SKILLS !== 'undefined' ? TECH_SKILLS.find((x) => x.name.toLowerCase() === String(name).toLowerCase()) : null);
+  // Cari logo: nama sama persis di TECH_SKILLS (HTML -> HTML5, CSS -> CSS3), lalu logo tambahan khusus proyek
+  const TECH_ALIAS = { html: 'html5', css: 'css3' };
+  const findTech = (name) => {
+    const key = String(name).toLowerCase();
+    const k = TECH_ALIAS[key] || key;
+    const base = typeof TECH_SKILLS !== 'undefined' ? TECH_SKILLS.find((x) => x.name.toLowerCase() === k) : null;
+    if (base) return base;
+    return (typeof PROJECT_TECH_EXTRA !== 'undefined' && PROJECT_TECH_EXTRA[k]) || null;
+  };
   const links = isProject ? (item.links || []) : [];
   const linkMeta = {
     github: { label: 'Lihat repository', icon: getSocialIcon('github', 'GitHub', 18) },

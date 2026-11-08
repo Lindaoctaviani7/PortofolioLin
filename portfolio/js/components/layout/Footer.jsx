@@ -196,10 +196,10 @@ function Footer() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
   const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'portfolio', label: 'Portfolio' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'home', label: 'Beranda' },
+    { id: 'about', label: 'Tentang Saya' },
+    { id: 'portfolio', label: 'Portofolio' },
+    { id: 'contact', label: 'Kontak' }
   ];
   const MailIcon = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="M3.5 7l8.5 6 8.5-6" /></svg>
@@ -225,7 +225,7 @@ function Footer() {
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 7l5 5-5 5" /><path d="M13 18h6" /></svg>
                 <span>{DATA.name}.</span>
               </a>
-              <p>Keep Learning, Building Digital Experiences, One Line at a Time.</p>
+              <p>Membangun aplikasi web dan mobile yang berfungsi, rapi, dan nyaman dipakai.</p>
             </div>
 
             <nav className="ft-col" aria-label="Navigasi footer">
@@ -316,6 +316,7 @@ function Footer() {
         </div>
 
         <div className={'rk-hint' + (done && inView ? ' show' : '')}>
+          Klik atau ketuk di mana saja untuk melihat roketnya lewat lagi 🚀
         </div>
       </div>
     </footer>
