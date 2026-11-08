@@ -41,7 +41,6 @@ function TechBook({ showToast }) {
     const r = rot.current;
     r.vx = 0; r.vy = 0;
     r.lastTouch = -99999; // langsung kembali ke pose datar
-    if (showToast) showToast(next ? 'Buku terbuka! Ini keahlian teknologi saya' : 'Buku tertutup');
   };
 
   // Skala otomatis agar muat di kolom
@@ -210,6 +209,16 @@ function TechBook({ showToast }) {
                     <div className="bk-cover-out"></div>
                     <div className="bk-cover-in"><div className="bk-lines"></div></div>
                   </div>
+
+                  {/* Petunjuk di luar buku, melengkung mengikuti sudut kanan atas sampul */}
+                  <svg className="bk-clickme" viewBox="0 0 260 340" aria-hidden="true">
+                    <defs>
+                      <path id="bkClickArc" d="M 186 -34 H 244 A 24 24 0 0 1 268 -10 V 50" fill="none" />
+                    </defs>
+                    <text>
+                      <textPath href="#bkClickArc" startOffset="50%" textAnchor="middle">!!!</textPath>
+                    </text>
+                  </svg>
                 </div>
               </div>
             </div>

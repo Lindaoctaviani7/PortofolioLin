@@ -1,5 +1,6 @@
 const DATA = {
   name: "Linda",
+  fullName: "Linda Octaviani",
   roles: [
     "Front-End Developer",
     "UI/UX Designer",
@@ -38,6 +39,8 @@ const DATA = {
   projects: [
     {
       t: "Website Portal Magang",
+      // Isi url dengan link GitHub / Figma proyek ini (kosong = tombol nonaktif)
+      links: [{ type: "github", url: "" }, { type: "figma", url: "" }],
       img: "./assets/prototype/MagangMatch.png",
       r: "Front-End Developer • Semester 4",
       d: "Platform komprehensif untuk pencarian, pelamaran, dan manajemen informasi magang mahasiswa dengan antarmuka yang bersih dan terstruktur.",
@@ -50,6 +53,8 @@ const DATA = {
     },
     {
       t: "Website Lab NCS",
+      // Isi url dengan link GitHub / Figma proyek ini (kosong = tombol nonaktif)
+      links: [{ type: "figma", url: "" }],
       img: "./assets/prototype/lab ncs.png",
       r: "Documenter & UI Designer • Semester 3",
       d: "Penyusunan blueprint dokumentasi teknis sistem dan perancangan awal antarmuka website laboratorium komputasi.",
@@ -62,7 +67,10 @@ const DATA = {
     },
     {
       t: "FinMind",
+      // Isi url dengan link GitHub / Figma proyek ini (kosong = tombol nonaktif)
+      links: [{ type: "figma", url: "" }],
       img: "./assets/prototype/FinMind.png",
+      imgPos: "50% 46%", // bagian gambar yang tampil di kartu (logo FinMind ada di tengah)
       r: "Prototype Aplikasi Mobile",
       d: "Prototype aplikasi mobile FinMind dengan layar pembuka (onboarding) yang sederhana.",
       p: [
@@ -73,6 +81,8 @@ const DATA = {
     },
     {
       t: "PICO",
+      // Isi url dengan link GitHub / Figma proyek ini (kosong = tombol nonaktif)
+      links: [{ type: "figma", url: "" }],
       img: "./assets/prototype/pico.jpeg",
       r: "Prototype Game",
       d: "Prototype game PICO dengan menu utama bergaya kartun.",
@@ -88,6 +98,12 @@ const DATA = {
     { t: "Global Game Jam 2026 Malang", s: "Participant • Game development challenge 48 jam", img: "./assets/sertifikat/gjm.png" },
     { t: "Polinema Bridge Tournament 2026", s: "Panitia • UKM Olah Raga Politeknik Negeri Malang", img: "./assets/sertifikat/bridge.png" },
     { t: "Polinema Bridge Tournament 2025", s: "Panitia • UKM Olah Raga Politeknik Negeri Malang", img: "./assets/sertifikat/pbt.png" },
+    { t: "Kejuaraan Nasional Catur Polinema Cup 2026", s: "Panitia • UKM Olah Raga Politeknik Negeri Malang • 18 April 2026", img: "./assets/sertifikat/catur26.png" },
+    { t: "Kejuaraan Nasional Catur Polinema Cup 2025", s: "Panitia • UKM Olah Raga Politeknik Negeri Malang • Februari 2025", img: "./assets/sertifikat/catur25.png" },
+    { t: "Workshop Tata Kelola Jaringan Sederhana dengan Mikrotik", s: "Peserta • Play IT, Jurusan Teknologi Informasi Polinema • 22-23 Juni 2026", img: "./assets/sertifikat/mikrotik.png" },
+    { t: "Prastudi Mahasiswa Baru Teknologi Informasi 2025", s: "Panitia • HMTI Politeknik Negeri Malang • 18-23 Agustus 2025", img: "./assets/sertifikat/prastud.png" },
+    { t: "Firma Ceria 2025 - From Lost to Led", s: "Panitia • UKM Kerohanian Islam Politeknik (RISPOL) • 16 November 2025", img: "./assets/sertifikat/firce.png" },
+    { t: "Mentoring MENYALA - Rukun Islam di Era Digitalisasi", s: "Panitia Closing Mentoring • UKM RISPOL • 20-21 September 2025", img: "./assets/sertifikat/mentoring.png" },
     { t: "Dasar Pemrograman Web", s: "Dicoding Academy • Menguasai semantik HTML5, CSS3 Grid/Flexbox, dan JavaScript ES6" },
     { t: "Belajar Membuat Aplikasi Flutter untuk Pemula", s: "Dicoding Academy • Fondasi arsitektur widget, state management dasar, dan layouting mobile" }
   ],
@@ -131,11 +147,11 @@ const DATA = {
     ]]
   ],
   gallery: [
-    { title: "Kegiatan Kampus & Perkuliahan", gradient: "#1e3a8a, #0f172a", desc: "Diskusi akademis & praktikum" },
-    { title: "Kerja Tim PBL Semester", gradient: "#581c87, #1e1035", desc: "Sinergi perancangan proyek" },
-    { title: "Magang di BPN", gradient: "#065f46, #06241b", desc: "Pengalaman kerja instansi nyata" },
-    { title: "Eksplorasi Mobile Flutter", gradient: "#9a3412, #2e1106", desc: "Belajar membuat app Android/iOS" },
-    { title: "Presentasi & Demo Proyek", gradient: "#831843, #2c0717", desc: "Memaparkan hasil produk di depan dosen" }
+    { title: "Magang di BPN", desc: "Kebersamaan bersama tim di sela magang", img: "./assets/kegiatan/bpn.jpeg", gradient: "#065f46, #06241b" },
+    { title: "Upacara 17 Agustus di BPN", desc: "Merayakan hari kemerdekaan bersama keluarga besar BPN", img: "./assets/kegiatan/17 bpn.jpeg", gradient: "#9a3412, #2e1106" },
+    { title: "Kerja Tim PBL Semester 3", desc: "Demo proyek bersama tim Teknologi Informasi", img: "./assets/kegiatan/pbl sem 3.jpeg", gradient: "#581c87, #1e1035" },
+    { title: "Global Game Jam 2026", desc: "Game jam 48 jam bersama tim", img: "./assets/kegiatan/gjm.jpeg", gradient: "#1e3a8a, #0f172a" },
+    { title: "Polinema Bridge Tournament", desc: "Bersama panitia dan para juara", img: "./assets/kegiatan/bridge.jpeg", imgPos: "center 30%", gradient: "#831843, #2c0717" }
   ],
   playlist: [
     { title: "Deep Focus", artist: "Lo-fi Beats", color: "#3b82f6", duration: "02:45" },

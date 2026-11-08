@@ -127,3 +127,30 @@
   animation: pd-spin 0.8s linear infinite;
 }
 @keyframes pd-spin { to { transform: rotate(360deg); } }
+
+/* Ikon merek pada chip teknologi */
+.pd-chip .pd-brand { display: inline-grid; place-items: center; width: 22px; height: 22px; }
+.pd-chip .pd-brand svg { width: 22px; height: 22px; color: inherit; }
+
+/* Tombol menuju GitHub / Figma di bagian bawah halaman detail */
+.pd-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px; }
+.pd-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.pd-cta:hover { background: #3b82f6; transform: translateY(-2px); }
+.pd-cta .pd-brand { display: inline-grid; place-items: center; width: 20px; height: 20px; }
+.pd-cta .pd-brand svg { width: 20px; height: 20px; }
+.pd-cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.pd-cta.is-disabled { background: rgba(255, 255, 255, 0.08); color: rgba(241, 245, 249, 0.5); box-shadow: none; cursor: not-allowed; }
+.pd-cta.is-disabled:hover { background: rgba(255, 255, 255, 0.08); transform: none; }

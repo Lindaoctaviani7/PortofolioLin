@@ -667,3 +667,31 @@
     animation: none;
   }
 }
+/* Tulisan "Klik me" berada di LUAR buku, melengkung mengikuti sudut kanan atas sampul */
+.bk-clickme {
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 380px;
+  overflow: visible;
+  transform: translateZ(24px);
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  filter: drop-shadow(0 0 7px rgba(96, 165, 250, 0.85));
+}
+.bk-book.is-open .bk-clickme { opacity: 0; }
+.bk-clickme text {
+  fill: #fff;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  animation: bkClickPulse 2.2s ease-in-out infinite;
+}
+@keyframes bkClickPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bk-clickme text { animation: none; }
+}

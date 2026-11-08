@@ -1,5 +1,6 @@
 function About({ showToast }) {
   const avatarCardRef = useRef(null);
+  const [photoFailed, setPhotoFailed] = useState(false);
 
   const handleDownloadCV = () => {
     if (DATA.resume && DATA.resume.trim() !== '') {
@@ -53,7 +54,16 @@ function About({ showToast }) {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
-          <div className="avatar-initial">{DATA.name[0]}</div>
+          {!photoFailed ? (
+            <img
+              className="avatar-photo"
+              src="./assets/kegiatan/profile.jpeg"
+              alt={`Foto ${DATA.name}`}
+              onError={() => setPhotoFailed(true)}
+            />
+          ) : (
+            <div className="avatar-initial">{DATA.name[0]}</div>
+          )}
           <div className="avatar-tag">
             <span className="status-pulse"></span>
             <span>Front-End Dev &amp; UI/UX</span>

@@ -1,12 +1,10 @@
 // Halaman detail proyek / sertifikat (dibuka dari kartu di dalam folder)
 function ProjectDetail({ detail, onClose }) {
-  const [expanded, setExpanded] = useState(false);
   const [ready, setReady] = useState(false); // spinner singkat sebelum halaman tampil
   const item = detail ? (DATA[detail.key] || [])[detail.idx] : null;
 
   useEffect(() => {
     if (!detail) return undefined;
-    setExpanded(false);
     setReady(false);
     const loadTimer = setTimeout(() => setReady(true), 450);
     const prevOverflow = document.body.style.overflow;
@@ -27,6 +25,12 @@ function ProjectDetail({ detail, onClose }) {
   const description = isProject ? item.d : item.s;
   const extra = isProject ? (item.p || []) : [];
   const techs = isProject ? (item.s || []) : [];
+  const findTech = (name) => (typeof TECH_SKILLS !== 'undefined' ? TECH_SKILLS.find((x) => x.name.toLowerCase() === String(name).toLowerCase()) : null);
+  const links = isProject ? (item.links || []) : [];
+  const linkMeta = {
+    github: { label: 'Lihat repository', icon: getSocialIcon('github', 'GitHub', 18) },
+    figma: { label: 'Lihat desain di Figma', icon: findTech('Figma') ? <span className="pd-brand">{findTech('Figma').icon}</span> : null }
+  };
   const isCode = (t) => /^(html|css|php)/i.test(t);
 
   const CubeIcon = () => (
@@ -62,32 +66,38 @@ function ProjectDetail({ detail, onClose }) {
             <p className="pd-desc">{description}</p>
 
             {extra.length > 0 && (
-              <React.Fragment>
-                {expanded ? (
-                  <ul className="pd-points">
-                    {extra.map((pt, i) => <li key={i}>{pt}</li>)}
-                  </ul>
-                ) : (
-                  <p className="pd-desc pd-clamp">{extra[0]}</p>
-                )}
-                <button type="button" className="pd-more" aria-expanded={expanded} onClick={() => setExpanded((v) => !v)}>
-                  {expanded ? 'Lihat lebih sedikit' : 'Lihat selengkapnya'}
-                  <svg className={expanded ? 'is-up' : ''} viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
-                </button>
-              </React.Fragment>
+              <ul className="pd-points">
+                {extra.map((pt, i) => <li key={i}>{pt}</li>)}
+              </ul>
             )}
 
             {techs.length > 0 && (
               <div className="pd-tech">
                 <h3><CodeIcon /> Technologies Used</h3>
                 <div className="pd-chips">
-                  {techs.map((t) => (
-                    <span className="pd-chip" key={t}>
-                      {isCode(t) ? <CodeIcon /> : <CubeIcon />}
-                      {t}
-                    </span>
-                  ))}
+                  {techs.map((t) => {
+                    const brand = findTech(t);
+                    return (
+                      <span className="pd-chip" key={t}>
+                        {brand ? <span className="pd-brand">{brand.icon}</span> : (isCode(t) ? <CodeIcon /> : <CubeIcon />)}
+                        {t}
+                      </span>
+                    );
+                  })}
                 </div>
+              </div>
+            )}
+
+            {links.length > 0 && (
+              <div className="pd-actions">
+                {links.map((l, i) => {
+                  const meta = linkMeta[l.type] || { label: 'Buka tautan', icon: null };
+                  return l.url ? (
+                    <a key={i} className="pd-cta" href={l.url} target="_blank" rel="noopener noreferrer">{meta.icon}{meta.label}</a>
+                  ) : (
+                    <span key={i} className="pd-cta is-disabled" role="link" aria-disabled="true" title="Link belum tersedia">{meta.icon}{meta.label}</span>
+                  );
+                })}
               </div>
             )}
           </div>

@@ -72,7 +72,7 @@ function App() {
             <div className="center">
               <h2 className="section-title">Portofolio</h2>
             </div>
-            <PortfolioTabs activeTab={activePortfolioTab} setActiveTab={setActivePortfolioTab} />
+            <PortfolioTabs activeTab={activePortfolioTab} setActiveTab={setActivePortfolioTab} onOpenDetail={(key, idx) => setDetail({ key, idx })} />
             <CoverflowGallery />
           </div>
         </section>

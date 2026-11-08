@@ -1,6 +1,5 @@
 function StarfieldCanvas() {
   const canvasRef = useRef(null);
-  const glowRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -32,9 +31,6 @@ function StarfieldCanvas() {
     const handleResize = () => createStars();
     const handlePointerMove = (e) => {
       mouseX = e.clientX; mouseY = e.clientY;
-      if (glowRef.current && !reduceMotion) {
-        glowRef.current.style.transform = `translate(${mouseX - 225}px, ${mouseY - 225}px)`;
-      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -92,7 +88,6 @@ function StarfieldCanvas() {
   return (
     <React.Fragment>
       <canvas id="stars" ref={canvasRef} aria-hidden="true" />
-      <div className="ambient-glow" ref={glowRef} aria-hidden="true" />
     </React.Fragment>
   );
 }

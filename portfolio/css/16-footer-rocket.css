@@ -11,8 +11,24 @@
 }
 
 footer {
+  --rk-top: clamp(150px, 17vw, 260px);   /* zona asap yang menjorok ke atas footer */
+  position: relative;
+  z-index: 2;
+  margin-top: calc(var(--rk-top) * -1);  /* footer menimpa bagian bawah halaman: tanpa garis/batas keras */
   overflow: hidden;
-  padding-top: 0;
+  padding: 0;
+  border-top: 0;
+  text-align: left;
+  pointer-events: none;
+}
+
+.rk-sentinel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--rk-top);
+  bottom: 0;
+  pointer-events: none;
 }
 
 .rk-stage {
@@ -24,9 +40,11 @@ footer {
   --fly: 2.5s;
   --spin: -14deg;
   position: relative;
-  width: calc(100% + 48px);
-  height: clamp(250px, 28vw, 380px);
-  margin: 0 -24px;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: var(--rk-top);
+  min-height: calc(var(--rk-top) + clamp(380px, 36vw, 460px));
+  margin: 0;
   pointer-events: none;
   user-select: none;
   animation: rkSpin 2.6s ease-in-out infinite alternate;
@@ -54,44 +72,177 @@ footer {
   }
 }
 
-/* ---------------- Teks footer ---------------- */
-.rk-foot-text {
-  position: absolute;
-  left: 50%;
-  top: 72%;
-  z-index: 1;
-  width: min(92%, 640px);
-  margin: 0;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  opacity: 0;
+/* ---------------- Isi footer ---------------- */
+@property --reveal {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
 }
 
-.go .rk-foot-text {
+.ft-content {
+  --reveal: 0%;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 64px 24px calc(env(safe-area-inset-bottom, 0px) + 90px);
+  text-align: left;
+  pointer-events: auto;
+  opacity: 0;
+  /* Tepi lembut yang menyapu dari kanan ke kiri, searah dengan asap yang memudar */
+  -webkit-mask-image: linear-gradient(to left, #000 calc(var(--reveal) - 28%), transparent var(--reveal));
+  mask-image: linear-gradient(to left, #000 calc(var(--reveal) - 28%), transparent var(--reveal));
+}
+
+.go .ft-content {
   animation: rkTextShow var(--cycle) ease-in-out both;
 }
 
-/* --t0: 0 = kunjungan pertama (teks belum tampil), 1 = putar ulang (teks tertutup asap dulu) */
+/* --t0: 0 = kunjungan pertama (belum tampil), 1 = putar ulang (tampil dulu, lalu tertutup asap) */
 @keyframes rkTextShow {
 
   0%,
   22% {
     opacity: var(--t0);
+    --reveal: 130%;
   }
 
   34% {
     opacity: 0;
+    --reveal: 0%;
   }
 
-  72% {
-    opacity: 0;
+  /* asap mulai memudar (kanan lebih dulu) -> isi footer ikut muncul ke arah kiri */
+  38% {
+    opacity: 1;
+    --reveal: 0%;
   }
 
-  90%,
+  92%,
   100% {
     opacity: 1;
+    --reveal: 130%;
+  }
+}
+
+.ft-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 40px 120px;
+  align-items: start;
+}
+
+.ft-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.ft-logo svg {
+  color: var(--accent);
+}
+
+.ft-brand p {
+  max-width: 420px;
+  margin: 18px 0 0;
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.ft-col h4 {
+  margin: 0 0 20px;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ft-col ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ft-col li a {
+  color: #e2e8f0;
+  font-size: 1.02rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.ft-col li a:hover {
+  color: var(--accent);
+}
+
+.ft-socials {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ft-social {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.03);
+  color: #e2e8f0;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.ft-social:hover {
+  color: #fff;
+  border-color: var(--accent);
+  background: var(--primary-subtle);
+  transform: translateY(-2px);
+}
+
+.ft-logo:focus-visible,
+.ft-col a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.ft-bottom {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 860px) {
+  .ft-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 40px;
+  }
+
+  .ft-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .ft-content {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 110px);
+  }
+}
+
+@media (max-width: 420px) {
+  .ft-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -100,34 +251,17 @@ footer {
   position: absolute;
   inset: 0;
   z-index: 3;
+  /* Asap menipis perlahan ke arah atas, seperti menyebar & hilang di udara (tidak terpotong lurus) */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 0.18) calc(var(--rk-top) * 0.3), rgba(0, 0, 0, 0.6) calc(var(--rk-top) * 0.65), #000 calc(var(--rk-top) * 1.15));
+  mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 0.18) calc(var(--rk-top) * 0.3), rgba(0, 0, 0, 0.6) calc(var(--rk-top) * 0.65), #000 calc(var(--rk-top) * 1.15));
 }
 
 .rk-puff {
   position: absolute;
-  border-radius: 50%;
   opacity: 0;
-  background: radial-gradient(circle,
-      rgba(232, 235, 255, 0.92) 0%,
-      rgba(206, 211, 248, 0.8) 34%,
-      rgba(170, 178, 238, 0.5) 54%,
-      rgba(140, 148, 225, 0) 70%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   will-change: transform, opacity;
-}
-
-.rk-puff.tone1 {
-  background: radial-gradient(circle,
-      rgba(214, 219, 250, 0.92) 0%,
-      rgba(184, 191, 240, 0.8) 36%,
-      rgba(150, 158, 226, 0.5) 56%,
-      rgba(120, 128, 210, 0) 70%);
-}
-
-.rk-puff.tone2 {
-  background: radial-gradient(circle,
-      rgba(248, 240, 248, 0.92) 0%,
-      rgba(222, 214, 244, 0.8) 36%,
-      rgba(172, 168, 230, 0.5) 56%,
-      rgba(140, 138, 214, 0) 70%);
 }
 
 .go .rk-puff {
@@ -139,22 +273,22 @@ footer {
 @keyframes rkPuff {
   0% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.25);
+    transform: translate(0, 0) rotate(var(--rot)) scale(0.25);
   }
 
   12% {
-    opacity: 1;
-    transform: translate(calc(var(--ddx) * 0.2), calc(var(--ddy) * 0.2)) scale(0.8);
+    opacity: calc(var(--op, 1) * 0.96);
+    transform: translate(calc(var(--ddx) * 0.2), calc(var(--ddy) * 0.2)) rotate(var(--rot)) scale(0.8);
   }
 
   58% {
-    opacity: 0.96;
-    transform: translate(calc(var(--ddx) * 0.7), calc(var(--ddy) * 0.7)) scale(1.35);
+    opacity: calc(var(--op, 1) * 0.9);
+    transform: translate(calc(var(--ddx) * 0.7), calc(var(--ddy) * 0.7)) rotate(calc(var(--rot) + 12deg)) scale(1.35);
   }
 
   100% {
     opacity: 0;
-    transform: translate(var(--ddx), var(--ddy)) scale(1.85);
+    transform: translate(var(--ddx), var(--ddy)) rotate(calc(var(--rot) + 22deg)) scale(1.85);
   }
 }
 
@@ -420,9 +554,9 @@ footer {
 .rk-hint {
   position: absolute;
   left: 50%;
-  bottom: 6px;
+  top: calc(var(--rk-top) + 14px);
   z-index: 5;
-  transform: translate(-50%, 8px);
+  transform: translate(-50%, -8px);
   padding: 7px 16px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -451,8 +585,10 @@ footer {
     transition: none !important;
   }
 
-  .rk-foot-text {
+  .ft-content {
     opacity: 1;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .rk-path-x,

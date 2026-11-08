@@ -1,10 +1,65 @@
+// Tekstur asap realistis: awan bergumpal dibuat dari noise fraktal (fBm), digambar sekali ke canvas
+function makeSmokeTextures() {
+  const S = 220;
+  const out = [];
+  const clamp01 = (v) => Math.min(1, Math.max(0, v));
+  const smoothstep = (a, b, v) => { const t = clamp01((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+  for (let seed = 0; seed < 4; seed++) {
+    const hash = (x, y) => {
+      let h = (x * 374761393 + y * 668265263 + (seed + 1) * 1442695041) | 0;
+      h = (h ^ (h >>> 13)) * 1274126177 | 0;
+      return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
+    };
+    const noise = (x, y) => {
+      const xi = Math.floor(x), yi = Math.floor(y);
+      const u = smoothstep(0, 1, x - xi), v = smoothstep(0, 1, y - yi);
+      const a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+      return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+    };
+    const fbm = (x, y, oct) => {
+      let sum = 0, amp = 0.5, f = 1, norm = 0;
+      for (let o = 0; o < oct; o++) { sum += amp * noise(x * f, y * f); norm += amp; amp *= 0.5; f *= 2; }
+      return sum / norm;
+    };
+    const c = document.createElement('canvas');
+    c.width = c.height = S;
+    const ctx = c.getContext('2d');
+    const img = ctx.createImageData(S, S);
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const u = (x / S) * 2 - 1, v = (y / S) * 2 - 1;
+        const r = Math.hypot(u, v);
+        const big = fbm(x / S * 3.2, y / S * 3.2, 5);          // gumpalan besar
+        const fine = fbm(x / S * 9 + 7.3, y / S * 9 + 2.1, 4); // detail halus
+        const edge = r + (big - 0.5) * 0.9;                    // tepi bergelombang
+        let a = 1 - smoothstep(0.34, 0.95, edge);
+        a *= 0.7 + 0.55 * fine;
+        a *= 1 - smoothstep(0.86, 1, r);
+        a = clamp01(a * 1.18);
+        const light = clamp01(0.5 - (u * 0.35 + v * 0.8) * 0.5);   // terang dari atas
+        const shade = Math.max(140, Math.min(255, 255 - (1 - fine) * 40 - (1 - light) * 46 - Math.max(0, 0.5 - big) * 36));
+        const i = (y * S + x) * 4;
+        img.data[i] = shade - 7;
+        img.data[i + 1] = shade - 3;
+        img.data[i + 2] = shade;
+        img.data[i + 3] = Math.round(a * 255);
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    out.push(c.toDataURL('image/png'));
+  }
+  return out;
+}
+
 function Footer() {
   const stageRef = useRef(null);
+  const sentinelRef = useRef(null);
   const [flight, setFlight] = useState(0);   // 0 = menunggu; >0 = nomor peluncuran
   const [inView, setInView] = useState(false);
   const [done, setDone] = useState(false);
   const [puffs, setPuffs] = useState([]);
   const [embers, setEmbers] = useState([]);
+  const [tex, setTex] = useState([]);
   const inViewRef = useRef(false);
   const flyingRef = useRef(false);
   const timerRef = useRef(null);
@@ -32,6 +87,11 @@ function Footer() {
     setFlight(0);
   }, []);
 
+  // 0) Buat tekstur asap sekali saja
+  useEffect(() => {
+    try { setTex(makeSmokeTextures()); } catch (err) { /* tanpa tekstur, asap tidak ditampilkan */ }
+  }, []);
+
   // 1) Hitung ukuran roket, jalur & posisi asap sesuai lebar/tinggi layar
   useEffect(() => {
     const el = stageRef.current;
@@ -40,11 +100,13 @@ function Footer() {
     const layout = () => {
       const W = Math.min(el.getBoundingClientRect().width, document.documentElement.clientWidth);
       const H = el.clientHeight;
+      const top = parseFloat(getComputedStyle(el).paddingTop) || 0;   // zona asap di atas isi footer
+      const ch = Math.max(1, H - top);                                  // tinggi area isi footer
       const len = clamp(W * 0.28, 170, 380);           // panjang roket (besar)
       const k = len / 130;
       const sx = W + len * 0.9;                        // mulai di luar layar kanan
       const dx = -(W + len * 2.1);                     // berakhir di luar layar kiri
-      const ry = H * 0.4;                              // garis terbang roket
+      const ry = top + ch * 0.4;                       // garis terbang roket
       const s = el.style;
       s.setProperty('--k', k.toFixed(3));
       s.setProperty('--sx', sx.toFixed(1) + 'px');
@@ -58,21 +120,26 @@ function Footer() {
       sizeRef.current = { w: W, h: H };
       const rnd = (a, b) => a + Math.random() * (b - a);
       const emitX = sx + len * 0.37;                   // ujung nosel
-      const N = Math.round(clamp(W / 11, 70, 120));
+      const N = Math.round(clamp(W / 8, 90, 170));
       const list = [];
       for (let i = 0; i < N; i++) {
         const near = i % 2 === 0;
         const x = rnd(-90, W + 90);
         const t = Math.max(0, FLY_S * (emitX - x) / -dx);
-        const y = near ? ry + (Math.random() - 0.5) * H * 0.3 : H * rnd(0.42, 0.92);
-        const size = (near ? rnd(46, 92) : rnd(56, 110)) * k;
+        const upper = i % 4 === 1;                      // sebagian asap membumbung ke atas, melewati batas footer
+        const y = near ? ry + (Math.random() - 0.5) * ch * 0.5
+          : upper ? top * rnd(0.15, 1) + ch * rnd(0, 0.2)
+          : top + ch * rnd(0.45, 0.95);
+        const size = (near ? rnd(60, 112) : rnd(80, 142)) * k;
         list.push({
           x, y, size,
           delay: t + (near ? 0 : rnd(0.05, 0.5)),
           life: rnd(3.6, 4.3),
           ddx: rnd(-40, 70) * k * 0.5,
           ddy: (near ? rnd(-30, 30) : rnd(-20, 40)) * k * 0.5,
-          tone: Math.floor(rnd(0, 3)),
+          tone: Math.floor(rnd(0, 4)),
+          rot: rnd(0, 360),
+          op: upper ? rnd(0.45, 0.7) : 1,
         });
       }
       setPuffs(list);
@@ -110,44 +177,99 @@ function Footer() {
       setInView(vis);
       if (vis) launch(); else reset();
     }, { threshold: 0.5 });
-    io.observe(el);
+    io.observe(sentinelRef.current || el);
     return () => { io.disconnect(); clearTimeout(timerRef.current); };
   }, [launch, reset]);
 
   // 3) Klik / ketuk di mana saja saat di footer = roket lewat lagi
   useEffect(() => {
-    const onPointer = () => {
+    const onPointer = (e) => {
+      if (e.target.closest && e.target.closest('a, button')) return;
       if (inViewRef.current && !flyingRef.current) launch();
     };
     document.addEventListener('pointerdown', onPointer);
     return () => document.removeEventListener('pointerdown', onPointer);
   }, [launch]);
 
+  const goTo = (e, id) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const navLinks = [
+    { id: 'home', label: 'Beranda' },
+    { id: 'about', label: 'Tentang Saya' },
+    { id: 'portfolio', label: 'Portofolio' },
+    { id: 'contact', label: 'Kontak' }
+  ];
+  const MailIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="M3.5 7l8.5 6 8.5-6" /></svg>
+  );
+
   const idx12 = Array.from({ length: 12 }, (_, i) => i);
   const idx3 = [0, 1, 2];
 
   return (
-    <footer>
+    <footer id="contact">
       <div
         className={'rk-stage' + (inView ? ' run' : '') + (flight > 0 ? ' go' : '')}
         ref={stageRef}
       >
-        {/* Teks footer: tertutup asap, baru muncul setelah asap hilang */}
-        <p className="rk-foot-text" key={'t' + flight} style={{ '--t0': flight > 1 ? 1 : 0 }}>
-          © {new Date().getFullYear()} <strong>{DATA.name}</strong>. Dibuat dengan React &amp; dedikasi.
-        </p>
+        {/* Penanda area isi footer (pemicu animasi saat area ini terlihat) */}
+        <div className="rk-sentinel" ref={sentinelRef} aria-hidden="true"></div>
+
+        {/* Isi footer: tertutup asap, lalu muncul dari kanan ke kiri mengikuti asap yang memudar */}
+        <div className="ft-content" key={'t' + flight} style={{ '--t0': flight > 1 ? 1 : 0 }}>
+          <div className="ft-grid">
+            <div className="ft-brand">
+              <a className="ft-logo" href="#home" onClick={(e) => goTo(e, 'home')}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 7l5 5-5 5" /><path d="M13 18h6" /></svg>
+                <span>{DATA.name}.</span>
+              </a>
+              <p>Membangun aplikasi web dan mobile yang berfungsi, rapi, dan nyaman dipakai.</p>
+            </div>
+
+            <nav className="ft-col" aria-label="Navigasi footer">
+              <h4>Navigasi</h4>
+              <ul>
+                {navLinks.map((l) => (
+                  <li key={l.id}><a href={`#${l.id}`} onClick={(e) => goTo(e, l.id)}>{l.label}</a></li>
+                ))}
+              </ul>
+            </nav>
+
+            <div className="ft-col">
+              <h4>Terhubung</h4>
+              <div className="ft-socials">
+                {DATA.socials.map((so) => (
+                  <a key={so.name} className="ft-social" href={so.fullUrl} target="_blank" rel="noopener noreferrer" aria-label={so.name} title={so.name}>
+                    {getSocialIcon(so.type, so.name, 18)}
+                  </a>
+                ))}
+                {DATA.email && (
+                  <a className="ft-social" href={`mailto:${DATA.email}`} aria-label="Email" title="Email"><MailIcon /></a>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="ft-bottom">
+            © {new Date().getFullYear()} {DATA.fullName || DATA.name}. All rights reserved.
+          </div>
+        </div>
 
         {/* Asap tebal di belakang roket */}
         <div className="rk-smoke-layer" key={'s' + flight} aria-hidden="true">
-          {puffs.map((p, i) => (
+          {tex.length > 0 && puffs.map((p, i) => (
             <span
               key={i}
-              className={'rk-puff tone' + p.tone}
+              className="rk-puff"
               style={{
                 left: p.x - p.size / 2, top: p.y - p.size / 2,
                 width: p.size, height: p.size,
                 animationDelay: p.delay.toFixed(2) + 's',
                 animationDuration: p.life.toFixed(2) + 's',
+                backgroundImage: `url(${tex[p.tone % tex.length]})`,
+                '--rot': p.rot.toFixed(0) + 'deg', '--op': p.op.toFixed(2),
                 '--ddx': p.ddx.toFixed(0) + 'px', '--ddy': p.ddy.toFixed(0) + 'px',
               }}
             ></span>
