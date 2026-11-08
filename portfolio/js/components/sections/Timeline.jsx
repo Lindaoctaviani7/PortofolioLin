@@ -1,8 +1,10 @@
 function Timeline() {
+  const DATA = useData();
+  const { t } = useLang();
   return (
     <div className="timeline-grid">
       <div className="timeline-box">
-        <h3>Education</h3>
+        <h3>{t('tl_edu')}</h3>
         <div className="timeline-items">
           {DATA.education.map((item, index) => (
             <div className="timeline-item" key={index}>
@@ -24,7 +26,7 @@ function Timeline() {
       </div>
 
       <div className="timeline-box">
-        <h3>Experience</h3>
+        <h3>{t('tl_exp')}</h3>
         <div className="timeline-items">
           {DATA.experience.map((item, index) => (
             <div className="timeline-item" key={index}>

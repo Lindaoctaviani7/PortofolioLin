@@ -23,6 +23,7 @@ function techbookLayout(n) {
 }
 
 function TechBook({ showToast }) {
+  const { t } = useLang();
   const [isOpen, setIsOpen] = React.useState(false);
   const [scale, setScale] = React.useState(1);
   const stageRef = React.useRef(null);
@@ -151,7 +152,7 @@ function TechBook({ showToast }) {
   const layout = techbookLayout(TECH_SKILLS.length);
 
   return (
-    <aside className="tech-book-card" aria-label="Buku interaktif keahlian">
+    <aside className="tech-book-card" aria-label={t('tb_aria')}>
       <div
         ref={stageRef}
         className={`bk-stage ${isOpen ? 'is-open' : ''}`}
@@ -182,7 +183,7 @@ function TechBook({ showToast }) {
                   className={`bk-book ${isOpen ? 'is-open' : 'is-closed'}`}
                   role="button"
                   tabIndex={0}
-                  aria-label={isOpen ? 'Klik untuk menutup buku' : 'Klik untuk membuka buku keahlian'}
+                  aria-label={isOpen ? t('tb_close') : t('tb_open')}
                   aria-pressed={isOpen}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
@@ -225,7 +226,7 @@ function TechBook({ showToast }) {
           </div>
 
           {/* Logo skill: keluar dari buku lalu melayang */}
-          <div className="bk-fly-layer" aria-label="Logo aplikasi dan bahasa pemrograman">
+          <div className="bk-fly-layer" aria-label={t('tb_logos')}>
             {TECH_SKILLS.map((skill, i) => (
               <div
                 key={skill.id}

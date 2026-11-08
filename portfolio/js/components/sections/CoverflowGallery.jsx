@@ -1,4 +1,6 @@
 function CoverflowGallery() {
+  const DATA = useData();
+  const { t } = useLang();
   // pos terus bertambah / berkurang tanpa batas, sehingga galeri berputar (looping)
   const [pos, setPos] = useState(0);
   const items = DATA.gallery;
@@ -56,7 +58,7 @@ function CoverflowGallery() {
               }}
               role="button"
               tabIndex={isCenter ? -1 : 0}
-              aria-label={isCenter ? item.title : `Tampilkan ${item.title}`}
+              aria-label={isCenter ? item.title : t('g_show', { title: item.title })}
               onClick={() => { if (!isCenter) go(offset); }}
               onKeyDown={(e) => {
                 if (!isCenter && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); go(offset); }
@@ -80,7 +82,7 @@ function CoverflowGallery() {
       </div>
 
       <div className="flow-controls">
-        <button className="btn sm" type="button" aria-label="Sebelumnya" onClick={() => go(-1)}>◀</button>
+        <button className="btn sm" type="button" aria-label={t('g_prev')} onClick={() => go(-1)}>◀</button>
         <div className="flow-dots">
           {items.map((_, i) => (
             <div
@@ -90,7 +92,7 @@ function CoverflowGallery() {
             />
           ))}
         </div>
-        <button className="btn sm" type="button" aria-label="Berikutnya" onClick={() => go(1)}>▶</button>
+        <button className="btn sm" type="button" aria-label={t('g_next')} onClick={() => go(1)}>▶</button>
       </div>
     </div>
   );

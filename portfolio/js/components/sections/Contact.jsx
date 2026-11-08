@@ -1,32 +1,34 @@
 function Contact({ showToast }) {
+  const DATA = useData();
+  const { t } = useLang();
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, message } = formData;
-    const subject = encodeURIComponent(`Pesan Portofolio dari ${name}`);
-    const body = encodeURIComponent(`${message}\n\n---\nPengirim: ${name}\nEmail: ${email}`);
+    const subject = encodeURIComponent(t('c_subject', { name }));
+    const body = encodeURIComponent(`${message}\n\n---\n${t('c_sender')}: ${name}\nEmail: ${email}`);
     window.location.href = `mailto:${DATA.email}?subject=${subject}&body=${body}`;
-    showToast('Membuka aplikasi email Anda...');
+    showToast(t('c_toast'));
   };
 
   return (
     <div className="panel-card">
-      <h3>Kirim Pesan Langsung</h3>
-      <p className="sub">Pesan akan langsung diarahkan ke email pribadi saya.</p>
+      <h3>{t('c_title')}</h3>
+      <p className="sub">{t('c_sub')}</p>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nama Lengkap</label>
+          <label>{t('c_name')}</label>
           <input
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            placeholder="Contoh: Budi Pratama"
+            placeholder={t('c_name_ph')}
             required
           />
         </div>
         <div className="form-group">
-          <label>Alamat Email</label>
+          <label>{t('c_email')}</label>
           <input
             type="email"
             value={formData.email}
@@ -36,20 +38,20 @@ function Contact({ showToast }) {
           />
         </div>
         <div className="form-group">
-          <label>Pesan Anda</label>
+          <label>{t('c_msg')}</label>
           <textarea
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            placeholder="Halo Bubu, saya tertarik mendiskusikan proyek..."
+            placeholder={t('c_msg_ph')}
             required
           />
         </div>
         <button className="btn primary" style={{ width: '100%' }} type="submit">
-          Kirim Pesan via Email
+          {t('c_send')}
         </button>
       </form>
 
-      <h4 style={{ margin: '28px 0 12px', fontSize: '1.1rem', color: '#fff' }}>Jejaring Sosial</h4>
+      <h4 style={{ margin: '28px 0 12px', fontSize: '1.1rem', color: '#fff' }}>{t('c_social')}</h4>
       <div className="social-grid">
         {DATA.socials.map((social) => (
           <a key={social.name} href={social.fullUrl} target="_blank" rel="noopener noreferrer" className="social-item">

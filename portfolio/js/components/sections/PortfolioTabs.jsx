@@ -1,4 +1,6 @@
 function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
+  const DATA = useData();
+  const { t } = useLang();
   const [expandedProjects, setExpandedProjects] = useState({});
   const [highlight, setHighlight] = useState(null); // 'projects-1', 'certificates-0', ...
   const [preview, setPreview] = useState(null); // { src, title } sertifikat yang sedang dibuka
@@ -33,9 +35,9 @@ function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{children}</svg>
   );
   const tabs = [
-    { key: 'projects', label: 'Projects', icon: ic(<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" />) },
-    { key: 'certificates', label: 'Certificates', icon: ic(<React.Fragment><circle cx="12" cy="9" r="5.5" /><path d="M8.5 13.5L7 21l5-3 5 3-1.5-7.5" /></React.Fragment>) },
-    { key: 'stack', label: 'Tech Stack', icon: ic(<React.Fragment><rect x="6" y="6" width="12" height="12" rx="2" /><rect x="9.5" y="9.5" width="5" height="5" rx="0.8" /><path d="M9 2.5v3M15 2.5v3M9 18.5v3M15 18.5v3M2.5 9h3M2.5 15h3M18.5 9h3M18.5 15h3" /></React.Fragment>) }
+    { key: 'projects', label: t('tab_projects'), icon: ic(<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" />) },
+    { key: 'certificates', label: t('tab_certs'), icon: ic(<React.Fragment><circle cx="12" cy="9" r="5.5" /><path d="M8.5 13.5L7 21l5-3 5 3-1.5-7.5" /></React.Fragment>) },
+    { key: 'stack', label: t('tab_stack'), icon: ic(<React.Fragment><rect x="6" y="6" width="12" height="12" rx="2" /><rect x="9.5" y="9.5" width="5" height="5" rx="0.8" /><path d="M9 2.5v3M15 2.5v3M9 18.5v3M15 18.5v3M2.5 9h3M2.5 15h3M18.5 9h3M18.5 15h3" /></React.Fragment>) }
   ];
 
   return (
@@ -76,7 +78,7 @@ function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
                 <h3>{proj.t}</h3>
                 <p className="project-desc">{proj.d}</p>
                 <button className="pj-details" type="button" onClick={() => onOpenDetail && onOpenDetail('projects', idx)}>
-                  Details
+                  {t('details')}
                   <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </button>
               </article>
@@ -92,7 +94,7 @@ function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
                 <div className="chips-cloud">
                   {skills.map((skill, sIdx) => (
                     <span className={`chip ${skill.isLearning ? 'learning' : ''}`} key={sIdx}>
-                      {skill.name} {skill.isLearning ? '✦ (Currently Learning)' : ''}
+                      {skill.name} {skill.isLearning ? '✦ ' + t('learning') : ''}
                     </span>
                   ))}
                 </div>
@@ -113,14 +115,14 @@ function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
                     loading="lazy"
                     role="button"
                     tabIndex={0}
-                    title="Klik untuk melihat sertifikat"
+                    title={t('cert_zoom')}
                     onClick={() => setPreview({ src: item.img, title: item.t })}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPreview({ src: item.img, title: item.t }); }
                     }}
                   />
                 )}
-                {activeTab === 'awards' && <span className="project-badge">Prestasi</span>}
+                {activeTab === 'awards' && <span className="project-badge">{t('badge_award')}</span>}
                 <h3>{item.t}</h3>
                 <p className="project-desc" style={{ marginTop: '8px' }}>{item.s}</p>
               </article>
@@ -131,7 +133,7 @@ function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
 
       {preview && (
         <div className="cert-lightbox" role="dialog" aria-modal="true" aria-label={preview.title} onClick={() => setPreview(null)}>
-          <button type="button" className="cert-lightbox-close" aria-label="Tutup" onClick={() => setPreview(null)}>&times;</button>
+          <button type="button" className="cert-lightbox-close" aria-label={t('close')} onClick={() => setPreview(null)}>&times;</button>
           <img src={encodeURI(preview.src)} alt={preview.title} onClick={(e) => e.stopPropagation()} />
           <div className="cert-lightbox-caption">{preview.title}</div>
         </div>

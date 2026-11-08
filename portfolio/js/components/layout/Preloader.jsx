@@ -2,6 +2,7 @@
 // teks "Welcome To My / Portofolio Website", ada "Loading" + persen; di akhir kilat besar lalu
 // teks pecah dan layar memudar memperlihatkan website. Semua digambar di canvas (tanpa file gambar).
 function Preloader() {
+  const { t: tr } = useLang();
   const rootRef = useRef(null);
   const canvasRef = useRef(null);
   const [progress, setProgress] = useState(0);
@@ -126,9 +127,9 @@ function Preloader() {
       o.font = `800 ${fs}px ${FONT}`;
       const y1 = cy - fs * 0.62, y2 = cy + fs * 0.55;
       o.fillStyle = '#fff';
-      o.fillText('Welcome To My', W / 2, y1);
+      o.fillText(tr('pre_1'), W / 2, y1);
       o.fillStyle = '#2f6bff';
-      o.fillText('Portofolio Website', W / 2, y2);
+      o.fillText(tr('pre_2'), W / 2, y2);
       const top = Math.max(0, Math.floor(cy - fs * 1.4)), hh = Math.min(H - top, Math.ceil(fs * 2.8));
       const data = o.getImageData(0, top, W, hh).data;
       const list = [];
@@ -244,11 +245,11 @@ function Preloader() {
           ctx.textBaseline = 'middle';
           ctx.font = `800 ${fs}px ${FONT}`;
           ctx.fillStyle = '#fff';
-          ctx.fillText('Welcome To My', W / 2, cy - fs * 0.62);
+          ctx.fillText(tr('pre_1'), W / 2, cy - fs * 0.62);
           ctx.shadowColor = 'rgba(60,120,255,0.55)';
           ctx.shadowBlur = fs * 0.25;
           ctx.fillStyle = '#2f6bff';
-          ctx.fillText('Portofolio Website', W / 2, cy + fs * 0.55);
+          ctx.fillText(tr('pre_2'), W / 2, cy + fs * 0.55);
           ctx.restore();
         }
       }
@@ -267,10 +268,10 @@ function Preloader() {
   if (phase === 'gone') return null;
 
   return (
-    <div ref={rootRef} className={'pl-root' + (phase === 'open' ? ' is-open' : '')} role="status" aria-live="polite" aria-label={`Memuat ${progress}%`}>
+    <div ref={rootRef} className={'pl-root' + (phase === 'open' ? ' is-open' : '')} role="status" aria-live="polite" aria-label={`${tr('loading')} ${progress}%`}>
       <canvas ref={canvasRef} className="pl-canvas" aria-hidden="true" />
       <div className="pl-load">
-        <div className="pl-load-row"><span>Loading</span><span>{progress}%</span></div>
+        <div className="pl-load-row"><span>{tr('loading')}</span><span>{progress}%</span></div>
         <div className="pl-load-line"><i style={{ width: progress + '%' }} /></div>
       </div>
     </div>

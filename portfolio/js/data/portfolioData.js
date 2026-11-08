@@ -74,7 +74,7 @@ const DATA = {
       links: [{ type: "github", url: "https://github.com/rahmanlana26/PBL_FINMIND.git" }, { type: "figma", url: "https://www.figma.com/design/qQFMV4kjZNhQy0U2dyPqBG/FinMind?t=QwUVMlvBMDCiiTCK-1" }],
       img: "./assets/prototype/FinMind.png",
       imgPos: "50% 46%", // bagian gambar yang tampil di kartu (logo FinMind ada di tengah)
-      r: "Aplikasi Mobile",
+      r: "Mobile Application",
       d: "FinMind is designed as an application that helps students manage their personal finances through transaction tracking and financial data analysis.",
       p: ["Contributions:",
         "Performed functional testing to verify application features, identify bugs, and ensure the application worked as expected.",

@@ -1,4 +1,5 @@
 function App() {
+  const { t } = useLang();
   const [currentTheme, setCurrentTheme] = useState(() => localStorage.getItem('bubu_portfolio_theme') || 'blue');
   const [activeSection, setActiveSection] = useState('home');
   const [activePortfolioTab, setActivePortfolioTab] = useState('projects');
@@ -71,7 +72,7 @@ function App() {
         <section id="portfolio">
           <div className="wrap">
             <div className="center">
-              <h2 className="section-title">Portofolio</h2>
+              <h2 className="section-title">{t('section_portfolio')}</h2>
             </div>
             <PortfolioTabs activeTab={activePortfolioTab} setActiveTab={setActivePortfolioTab} onOpenDetail={(key, idx) => setDetail({ key, idx })} />
             <CoverflowGallery />

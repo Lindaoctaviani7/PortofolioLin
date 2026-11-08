@@ -1,8 +1,17 @@
 function Hero({ onExploreProjects }) {
+  const DATA = useData();
+  const { lang, t } = useLang();
   const [typedText, setTypedText] = useState('');
   const [roleIndex, setRoleIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Ganti bahasa: ulangi animasi ketik dari awal agar tidak tersangkut di indeks lama
+  useEffect(() => {
+    setCharIndex(0);
+    setIsDeleting(false);
+    setTypedText('');
+  }, [lang]);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -32,13 +41,13 @@ function Hero({ onExploreProjects }) {
     }, speed);
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, roleIndex]);
+  }, [charIndex, isDeleting, roleIndex, DATA]);
 
   return (
     <div className="hero-content">
       <h1>
-        <span className="theme-text">Welcome to</span><br />
-        <span className="hero-subtext">My Portfolio</span>
+        <span className="theme-text">{t('hero_welcome')}</span><br />
+        <span className="hero-subtext">{t('hero_sub')}</span>
       </h1>
 
       <div className="typed-wrapper">
@@ -50,18 +59,18 @@ function Hero({ onExploreProjects }) {
 
       <div className="btn-group">
         <button className="btn primary" type="button" onClick={onExploreProjects}>
-           Explore Projects
+          {t('hero_explore')}
         </button>
         <a className="btn" href="#contact" onClick={(e) => {
           e.preventDefault();
           document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         }}>
-          Contact Me
+          {t('hero_contact')}
         </a>
       </div>
 
       <div className="social-strip">
-        <span className="label">Find me :</span>
+        <span className="label">{t('hero_find')}</span>
         <div className="social-links">
           {DATA.socials.map((social) => (
             <a

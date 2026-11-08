@@ -1,4 +1,6 @@
 function Guestbook({ showToast }) {
+  const DATA = useData();
+  const { t } = useLang();
   const [comments, setComments] = useState([]);
   const [authorName, setAuthorName] = useState('');
   const [message, setMessage] = useState('');
@@ -26,7 +28,7 @@ function Guestbook({ showToast }) {
       return updated;
     });
     setLikedMap((prev) => ({ ...prev, [index]: true }));
-    showToast('Terima kasih atas apresiasinya! ❤️');
+    showToast(t('gb_like_toast'));
   };
 
   const handleSubmit = (e) => {
@@ -48,23 +50,23 @@ function Guestbook({ showToast }) {
 
     setAuthorName('');
     setMessage('');
-    showToast('Komentar kamu berhasil dipublikasikan! 🎉');
+    showToast(t('gb_posted_toast'));
   };
 
   return (
     <div className="panel-card">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-        <h3>Buku Tamu &amp; Komentar</h3>
-        <span className="chip">{comments.length} Komentar</span>
+        <h3>{t('gb_title')}</h3>
+        <span className="chip">{t('gb_count', { n: comments.length })}</span>
       </div>
-      <p className="sub">Tinggalkan pesan hangat atau tanggapan kamu di sini!</p>
+      <p className="sub">{t('gb_sub')}</p>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
             value={authorName}
             onChange={(e) => setAuthorName(e.target.value)}
-            placeholder="Nama atau panggilan kamu"
+            placeholder={t('gb_name_ph')}
             required
           />
         </div>
@@ -72,13 +74,13 @@ function Guestbook({ showToast }) {
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Tuliskan pesan kamu..."
+            placeholder={t('gb_msg_ph')}
             style={{ minHeight: '90px' }}
             required
           />
         </div>
         <button className="btn" style={{ width: '100%' }} type="submit">
-          Kirim Komentar
+          {t('gb_send')}
         </button>
       </form>
 

@@ -1,4 +1,6 @@
 function Stats({ onSelectItem }) {
+  const DATA = useData();
+  const { t } = useLang();
   const statsRef = useRef(null);
   const [counts, setCounts] = useState({ projects: 0, certificates: 0 });
   const [openKey, setOpenKey] = useState(null);   // dipasang lewat klik/tap
@@ -6,8 +8,8 @@ function Stats({ onSelectItem }) {
 
   // Folder yang ditampilkan (urutan = urutan kartu)
   const folders = [
-    { key: 'projects', lines: ['projects'] },
-    { key: 'certificates', lines: ['certificates'] }
+    { key: 'projects', lines: [t('folder_projects')] },
+    { key: 'certificates', lines: [t('folder_certs')] }
   ];
 
   useEffect(() => {
@@ -105,7 +107,7 @@ function Stats({ onSelectItem }) {
                     aria-hidden={c.ghost ? 'true' : undefined}
                     role={c.ghost ? undefined : 'link'}
                     tabIndex={!c.ghost && isOpen ? 0 : -1}
-                    aria-label={c.ghost ? undefined : `Buka ${c.t} di portofolio`}
+                    aria-label={c.ghost ? undefined : t('folder_item_aria', { title: c.t })}
                     onClick={c.ghost ? undefined : (e) => { e.stopPropagation(); if (isOpen) handleGo(f.key, c.idx); }}
                     onKeyDown={c.ghost ? undefined : (e) => { if (isOpen && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); e.stopPropagation(); handleGo(f.key, c.idx); } }}
                   >
@@ -119,7 +121,7 @@ function Stats({ onSelectItem }) {
                     type="button"
                     className="folder-front"
                     aria-expanded={isOpen}
-                    aria-label={`${f.lines.join(' ')}: ${counts[f.key]}. ${pinned ? 'Tutup' : 'Buka'} folder`}
+                    aria-label={`${f.lines.join(' ')}: ${counts[f.key]}. ${pinned ? t('folder_close') : t('folder_open')}`}
                   >
                     <span className="folder-top">
                       <span className="folder-tag">{f.tag}</span>

@@ -1,4 +1,6 @@
 function About({ showToast }) {
+  const DATA = useData();
+  const { t } = useLang();
   const avatarCardRef = useRef(null);
   const [photoFailed, setPhotoFailed] = useState(false);
 
@@ -6,7 +8,7 @@ function About({ showToast }) {
     if (DATA.resume && DATA.resume.trim() !== '') {
       window.open(DATA.resume, '_blank');
     } else {
-      showToast('Tambahkan link file CV Anda pada portfolioData.resume');
+      showToast(t('about_cv_toast'));
     }
   };
 
@@ -30,19 +32,19 @@ function About({ showToast }) {
   return (
     <div className="about-hero">
       <div className="about-text">
-        <span className="section-tag">About Me</span>
-        <h2>Hi, I'm <span className="gradient-text">{DATA.name}</span></h2>
+        <span className="section-tag">{t('about_tag')}</span>
+        <h2>{t('about_hi')} <span className="gradient-text">{DATA.name}</span></h2>
         <p>{DATA.about}</p>
 
         <div className="btn-group">
           <button className="btn primary" type="button" onClick={handleDownloadCV}>
-            View CV
+            {t('about_cv')}
           </button>
           <a className="btn" href="#portfolio" onClick={(e) => {
             e.preventDefault();
             document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
           }}>
-            View Experience
+            {t('about_exp')}
           </a>
         </div>
       </div>
@@ -58,7 +60,7 @@ function About({ showToast }) {
             <img
               className="avatar-photo"
               src="./assets/kegiatan/profile.jpeg"
-              alt={`Foto ${DATA.name}`}
+              alt={t('about_photo', { name: DATA.name })}
               onError={() => setPhotoFailed(true)}
             />
           ) : (

@@ -1,5 +1,7 @@
 // Halaman detail proyek / sertifikat (dibuka dari kartu di dalam folder)
 function ProjectDetail({ detail, onClose }) {
+  const DATA = useData();
+  const { t } = useLang();
   const [ready, setReady] = useState(false); // spinner singkat sebelum halaman tampil
   const item = detail ? (DATA[detail.key] || [])[detail.idx] : null;
 
@@ -21,7 +23,7 @@ function ProjectDetail({ detail, onClose }) {
   if (!item) return null;
 
   const isProject = detail.key === 'projects';
-  const crumb = isProject ? 'Projects' : 'Certificates';
+  const crumb = isProject ? t('tab_projects') : t('tab_certs');
   const description = isProject ? item.d : item.s;
   const extra = isProject ? (item.p || []) : [];
   const techs = isProject ? (item.s || []) : [];
@@ -36,8 +38,8 @@ function ProjectDetail({ detail, onClose }) {
   };
   const links = isProject ? (item.links || []) : [];
   const linkMeta = {
-    github: { label: 'Lihat repository', icon: getSocialIcon('github', 'GitHub', 18) },
-    figma: { label: 'Lihat desain di Figma', icon: findTech('Figma') ? <span className="pd-brand">{findTech('Figma').icon}</span> : null }
+    github: { label: t('link_github'), icon: getSocialIcon('github', 'GitHub', 18) },
+    figma: { label: t('link_figma'), icon: findTech('Figma') ? <span className="pd-brand">{findTech('Figma').icon}</span> : null }
   };
   const isCode = (t) => /^(html|css|php)/i.test(t);
 
@@ -53,14 +55,14 @@ function ProjectDetail({ detail, onClose }) {
       <div className="pd-blob pd-blob-a" />
       <div className="pd-blob pd-blob-b" />
 
-      {!ready && <div className="pd-loader" aria-label="Memuat"><span /></div>}
+      {!ready && <div className="pd-loader" aria-label={t('loading')}><span /></div>}
 
       {ready && (
       <div className="pd-page" key={`${detail.key}-${detail.idx}`}>
         <nav className="pd-nav" aria-label="Breadcrumb">
           <button type="button" className="pd-back" onClick={onClose}>
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
-            Back
+            {t('back')}
           </button>
           <button type="button" className="pd-crumb" onClick={onClose}>{crumb}</button>
           <svg className="pd-sep" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
@@ -81,7 +83,7 @@ function ProjectDetail({ detail, onClose }) {
 
             {techs.length > 0 && (
               <div className="pd-tech">
-                <h3><CodeIcon /> Technologies Used</h3>
+                <h3><CodeIcon /> {t('tech_used')}</h3>
                 <div className="pd-chips">
                   {techs.map((t) => {
                     const brand = findTech(t);
@@ -99,7 +101,7 @@ function ProjectDetail({ detail, onClose }) {
             {links.length > 0 && (
               <div className="pd-actions">
                 {links.map((l, i) => {
-                  const meta = linkMeta[l.type] || { label: 'Buka tautan', icon: null };
+                  const meta = linkMeta[l.type] || { label: t('link_open'), icon: null };
                   // Tautan bawaan bila url proyek belum diisi: profil GitHub / beranda Figma
                   const ghProfile = (DATA.socials.find((so) => so.type === 'github') || {}).fullUrl;
                   const href = l.url || (l.type === 'github' ? ghProfile : l.type === 'figma' ? 'https://www.figma.com/' : '#');

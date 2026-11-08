@@ -11,7 +11,8 @@ portfolio-react-preview/
 ├── css/                       # 01-variables ... 14-tech-book (urutan = cascade)
 └── js/
     ├── core/react-hooks.js    # const { useState, useEffect, useRef, useCallback } = React
-    ├── data/                  # portfolioData.js (DATA), techSkills.jsx (TECH_SKILLS)
+    ├── core/i18n.jsx          # kamus teks UI EN/ID, LangProvider, useLang(), useData()
+    ├── data/                  # portfolioData.js (DATA, English), portfolioData.id.js (DATA_ID, terjemahan Indonesia), techSkills.jsx
     ├── utils/                 # stringToColor.js, socialIcons.jsx
     ├── components/
     │   ├── layout/            # StarfieldCanvas, Navbar, MobileDock, Footer, BackToTop, Toast
@@ -29,3 +30,10 @@ Browser memblokir pemuatan file `.jsx` lewat `file://`, jadi jalankan lewat serv
 - atau: `python -m http.server 8000` / `npx serve` di dalam folder ini
 
 Urutan `<script>` di `index.html` jangan diubah (data/util -> komponen -> App -> main).
+
+## Bahasa (EN / ID)
+
+Tombol bahasa ada di pojok kanan atas (`LanguageToggle.jsx`). Pilihan disimpan di `localStorage`.
+
+- Teks antarmuka: edit `STRINGS` di `js/core/i18n.jsx` (tambahkan kunci di `en` dan `id`).
+- Isi portofolio (proyek, sertifikat, deskripsi, dll.): edit `js/data/portfolioData.js` (English) dan `js/data/portfolioData.id.js` (Indonesia). Item array digabung berdasarkan urutan, jadi jika menambah proyek/sertifikat baru, tambahkan juga terjemahannya di posisi indeks yang sama.

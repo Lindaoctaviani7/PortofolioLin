@@ -1,9 +1,10 @@
 function MobileDock({ activeSection, setActiveSection }) {
+  const { t } = useLang();
   const dockItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'portfolio', label: 'Portofolio' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'home', label: t('nav_home') },
+    { id: 'about', label: t('nav_about') },
+    { id: 'portfolio', label: t('nav_portfolio') },
+    { id: 'contact', label: t('nav_contact') }
   ];
 
   const handleDockClick = (e, id) => {
@@ -14,7 +15,7 @@ function MobileDock({ activeSection, setActiveSection }) {
   };
 
   return (
-    <nav className="mobile-dock" aria-label="Navigasi Mobile">
+    <nav className="mobile-dock" aria-label={t('dock_aria')}>
       {dockItems.map((item) => (
         <a
           key={item.id}

@@ -52,6 +52,8 @@ function makeSmokeTextures() {
 }
 
 function Footer() {
+  const DATA = useData();
+  const { t } = useLang();
   const stageRef = useRef(null);
   const sentinelRef = useRef(null);
   const [flight, setFlight] = useState(0);   // 0 = menunggu; >0 = nomor peluncuran
@@ -196,10 +198,10 @@ function Footer() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
   const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About Me' },
-    { id: 'portfolio', label: 'Projects' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'home', label: t('nav_home') },
+    { id: 'about', label: t('f_about') },
+    { id: 'portfolio', label: t('f_projects') },
+    { id: 'contact', label: t('nav_contact') }
   ];
   const MailIcon = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="M3.5 7l8.5 6 8.5-6" /></svg>
@@ -225,11 +227,11 @@ function Footer() {
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 7l5 5-5 5" /><path d="M13 18h6" /></svg>
                 <span>{DATA.name}.</span>
               </a>
-              <p>Keep learning, growing, and building something meaningful through technology.</p>
+              <p>{t('f_tagline')}</p>
             </div>
 
-            <nav className="ft-col" aria-label="Navigasi footer">
-              <h4>Navigation</h4>
+            <nav className="ft-col" aria-label={t('f_nav_aria')}>
+              <h4>{t('f_nav')}</h4>
               <ul>
                 {navLinks.map((l) => (
                   <li key={l.id}><a href={`#${l.id}`} onClick={(e) => goTo(e, l.id)}>{l.label}</a></li>
@@ -238,7 +240,7 @@ function Footer() {
             </nav>
 
             <div className="ft-col">
-              <h4>Connect</h4>
+              <h4>{t('f_connect')}</h4>
               <div className="ft-socials">
                 {DATA.socials.map((so) => (
                   <a key={so.name} className="ft-social" href={so.fullUrl} target="_blank" rel="noopener noreferrer" aria-label={so.name} title={so.name}>
@@ -253,7 +255,7 @@ function Footer() {
           </div>
 
           <div className="ft-bottom">
-            © {new Date().getFullYear()} {DATA.fullName || DATA.name}. All rights reserved.
+            © {new Date().getFullYear()} {DATA.fullName || DATA.name}. {t('f_rights')}
           </div>
         </div>
 

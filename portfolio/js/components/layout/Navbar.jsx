@@ -1,21 +1,22 @@
 function Navbar({ activeSection, setActiveSection, currentTheme, setCurrentTheme, showToast }) {
+  const { lang, t } = useLang();
   const indicatorRef = useRef(null);
   const mascotRef = useRef(null);
   const linksContainerRef = useRef(null);
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'portfolio', label: 'Portfolio' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'home', label: t('nav_home') },
+    { id: 'about', label: t('nav_about') },
+    { id: 'portfolio', label: t('nav_portfolio') },
+    { id: 'contact', label: t('nav_contact') }
   ];
 
   const themes = [
-    { id: 'blue', color: '#3b82f6', label: 'Tema Biru' },
-    { id: 'violet', color: '#8b5cf6', label: 'Tema Violet' },
-    { id: 'emerald', color: '#10b981', label: 'Tema Emerald' },
-    { id: 'amber', color: '#f59e0b', label: 'Tema Amber' },
-    { id: 'rose', color: '#ec4899', label: 'Tema Rose' }
+    { id: 'blue', color: '#3b82f6', label: t('theme_blue') },
+    { id: 'violet', color: '#8b5cf6', label: t('theme_violet') },
+    { id: 'emerald', color: '#10b981', label: t('theme_emerald') },
+    { id: 'amber', color: '#f59e0b', label: t('theme_amber') },
+    { id: 'rose', color: '#ec4899', label: t('theme_rose') }
   ];
 
   useEffect(() => {
@@ -28,7 +29,7 @@ function Navbar({ activeSection, setActiveSection, currentTheme, setCurrentTheme
       indicatorRef.current.style.width = `${width}px`;
       mascotRef.current.style.transform = `translateX(${left + width / 2 - 14}px)`;
     }
-  }, [activeSection]);
+  }, [activeSection, lang]);
 
   const handleNavClick = (e, id) => {
     e.preventDefault();
@@ -39,13 +40,13 @@ function Navbar({ activeSection, setActiveSection, currentTheme, setCurrentTheme
 
   const handleThemeChange = (themeId) => {
     setCurrentTheme(themeId);
-    showToast(`Tema aksen diubah ke ${themeId.toUpperCase()}`);
+    showToast(t('toast_theme', { name: themeId.toUpperCase() }));
   };
 
   return (
     <header className="header-bar" role="banner">
       <div className="nav-container">
-        <nav className="nav-pill" id="desktopNav" aria-label="Navigasi Utama Desktop">
+        <nav className="nav-pill" id="desktopNav" aria-label={t('nav_aria')}>
           <div className="mascot" id="mascot" ref={mascotRef} aria-hidden="true">
             <svg viewBox="0 0 32 40" fill="none">
               <circle cx="16" cy="16" r="14" fill="#ffffff" />
@@ -77,7 +78,7 @@ function Navbar({ activeSection, setActiveSection, currentTheme, setCurrentTheme
       </div>
 
       <div className="nav-actions">
-        <div className="color-dots" title="Ubah tema aksen warna">
+        <div className="color-dots" title={t('theme_title')}>
           {themes.map((theme) => (
             <button
               key={theme.id}
@@ -90,6 +91,8 @@ function Navbar({ activeSection, setActiveSection, currentTheme, setCurrentTheme
           ))}
         </div>
       </div>
+
+      <LanguageToggle showToast={showToast} />
     </header>
   );
 }
