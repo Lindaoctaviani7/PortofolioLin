@@ -38,8 +38,6 @@ const STRINGS = {
     c_msg_ph: "Hello, I'm interested in discussing a project...", c_send: 'Send Message via Email',
     c_social: 'Social Networks', c_subject: 'Portfolio message from {name}', c_sender: 'Sender', c_toast: 'Opening your email app...',
     gb_title: 'Guestbook & Comments', gb_count: '{n} Comments', gb_sub: 'Leave a warm message or your thoughts here!',
-    gb_name_ph: 'Your name or nickname', gb_msg_ph: 'Write your message...', gb_send: 'Post Comment',
-    gb_like_toast: 'Thank you for your appreciation! ❤️', gb_posted_toast: 'Your comment has been published! 🎉',
     meta_desc: 'Official portfolio of Linda Octaviani - Junior Developer'
   },
   id: {
@@ -75,8 +73,6 @@ const STRINGS = {
     c_msg_ph: 'Halo, saya tertarik mendiskusikan proyek...', c_send: 'Kirim Pesan via Email',
     c_social: 'Jejaring Sosial', c_subject: 'Pesan Portofolio dari {name}', c_sender: 'Pengirim', c_toast: 'Membuka aplikasi email Anda...',
     gb_title: 'Buku Tamu & Komentar', gb_count: '{n} Komentar', gb_sub: 'Tinggalkan pesan hangat atau tanggapan kamu di sini!',
-    gb_name_ph: 'Nama atau panggilan kamu', gb_msg_ph: 'Tuliskan pesan kamu...', gb_send: 'Kirim Komentar',
-    gb_like_toast: 'Terima kasih atas apresiasinya! ❤️', gb_posted_toast: 'Komentar kamu berhasil dipublikasikan! 🎉',
     meta_desc: 'Portofolio resmi Linda Octaviani - Junior Developer'
   }
 };

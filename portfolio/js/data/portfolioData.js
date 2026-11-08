@@ -10,7 +10,7 @@ const DATA = {
   ],
   hero: "I focus on web and mobile application development, data processing, and applying machine learning through academic projects. With a strong passion for continuous learning and growth, I am currently seeking internship opportunities in software development.",
   about: "I am an Informatics Engineering student at State Polytechnic of Malang with a strong passion for software development. I continuously enhance my skills through academic projects and independent exploration, while documenting my work and projects on GitHub. Using Laravel, Flutter, and Python, I develop web and mobile applications and strive to create technology solutions that are functional, efficient, and aligned with user needs.",
-  resume: "",
+  resume: "https://drive.google.com/file/d/1O-0hCyime0RNwBha0_JpBu3tqrVDm4j9/view?usp=sharing",
   socials: [
     { name: "GitHub", url: "github.com/Lindaoctaviani7", fullUrl: "https://github.com/Lindaoctaviani7", type: "github" },
     { name: "LinkedIn", url: "linkedin.com/in/linda-octaviani", fullUrl: "https://www.linkedin.com/in/linda-octaviani-b22905313?utm_source=share_via&utm_content=profile&utm_medium=member_android", type: "linkedin" },
