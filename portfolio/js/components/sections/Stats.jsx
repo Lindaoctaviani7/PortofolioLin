@@ -18,7 +18,7 @@ function Stats({ onSelectItem }) {
 
         const duration = 1200;
         const startTime = performance.now();
-        const targets = { projects: DATA.projects.length, certificates: DATA.certificates.length };
+        const targets = { projects: DATA.projects.length, certificates: DATA.certificates.filter((c) => c.img).length };
 
         const animate = (currentTime) => {
           const elapsed = currentTime - startTime;
@@ -62,11 +62,13 @@ function Stats({ onSelectItem }) {
         const all = (DATA[f.key] || []).map((it, idx) => ({ ...it, idx }));
         const withImg = all.filter((it) => it.img);
         const list = withImg.length ? withImg : all;
-        const shown = list.slice(0, 4);
-        const extra = list.length - shown.length;
-        // Kartu isi folder, urut dari yang paling depan. Minimal 3 lapis agar susunan tetap rapi.
-        const cards = shown.map((it) => ({ t: it.t, sub: it.r || (typeof it.s === 'string' ? it.s : ''), img: it.img, idx: it.idx }));
+        // Kartu isi folder, urut dari yang paling depan. Semua item masuk; minimal 3 lapis agar susunan tetap rapi.
+        const cards = list.map((it) => ({ t: it.t, sub: it.r || (typeof it.s === 'string' ? it.s : ''), img: it.img, idx: it.idx }));
         while (cards.length < 3) cards.push({ ghost: true });
+        const n = cards.length;
+        const ts = n > 1 ? Math.min(8, 24 / (n - 1)) : 0;
+        const zs = n > 1 ? Math.min(9, 27 / (n - 1)) : 0;
+        const spread = n > 4 ? 24 : 17;
 
         return (
           <div
@@ -90,8 +92,16 @@ function Stats({ onSelectItem }) {
                 {cards.map((c, k) => (
                   <div
                     key={k}
-                    className={`folder-card fc-${k} ${c.img ? 'has-img' : ''} ${c.ghost ? 'is-ghost' : ''}`}
-                    style={c.img ? { backgroundImage: `url("${encodeURI(c.img)}")` } : undefined}
+                    className={`folder-card fc-${k % 4} ${c.img ? 'has-img' : ''} ${c.ghost ? 'is-ghost' : ''}`}
+                    style={{
+                      '--k': k,
+                      '--top': (40 - k * ts).toFixed(1) + 'px',
+                      '--z': (14 - k * zs).toFixed(1) + 'px',
+                      '--py': (-16 - k * ts * 0.75).toFixed(1) + 'px',
+                      '--oy': (-112 + k * ts).toFixed(1) + 'px',
+                      '--rot': (n > 1 ? spread - k * 2 * spread / (n - 1) : 0).toFixed(1) + 'deg',
+                      ...(c.img ? { backgroundImage: `url("${encodeURI(c.img)}")` } : {})
+                    }}
                     aria-hidden={c.ghost ? 'true' : undefined}
                     role={c.ghost ? undefined : 'link'}
                     tabIndex={!c.ghost && isOpen ? 0 : -1}

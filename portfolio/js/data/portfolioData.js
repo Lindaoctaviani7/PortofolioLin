@@ -39,8 +39,8 @@ const DATA = {
   projects: [
     {
       t: "Website Portal Magang",
-      // Isi url dengan link GitHub / Figma proyek ini (kosong = tombol nonaktif)
-      links: [{ type: "github", url: "" }, { type: "figma", url: "" }],
+      // Isi url dengan link GitHub / Figma proyek ini (kosong = memakai tautan bawaan: profil GitHub / figma.com)
+      links: [{ type: "github", url: "https://github.com/Lindaoctaviani7" }, { type: "figma", url: "" }],
       img: "./assets/prototype/MagangMatch.png",
       r: "Front-End Developer • Semester 4",
       d: "Platform komprehensif untuk pencarian, pelamaran, dan manajemen informasi magang mahasiswa dengan antarmuka yang bersih dan terstruktur.",
@@ -53,8 +53,8 @@ const DATA = {
     },
     {
       t: "Website Lab NCS",
-      // Isi url dengan link GitHub / Figma proyek ini (kosong = tombol nonaktif)
-      links: [{ type: "figma", url: "" }],
+      // Isi url dengan link GitHub / Figma proyek ini (kosong = memakai tautan bawaan: profil GitHub / figma.com)
+      links: [{ type: "github", url: "https://github.com/Lindaoctaviani7" }, { type: "figma", url: "" }],
       img: "./assets/prototype/lab ncs.png",
       r: "Documenter & UI Designer • Semester 3",
       d: "Penyusunan blueprint dokumentasi teknis sistem dan perancangan awal antarmuka website laboratorium komputasi.",
@@ -67,8 +67,8 @@ const DATA = {
     },
     {
       t: "FinMind",
-      // Isi url dengan link GitHub / Figma proyek ini (kosong = tombol nonaktif)
-      links: [{ type: "figma", url: "" }],
+      // Isi url dengan link GitHub / Figma proyek ini (kosong = memakai tautan bawaan: profil GitHub / figma.com)
+      links: [{ type: "github", url: "https://github.com/Lindaoctaviani7" }, { type: "figma", url: "" }],
       img: "./assets/prototype/FinMind.png",
       imgPos: "50% 46%", // bagian gambar yang tampil di kartu (logo FinMind ada di tengah)
       r: "Prototype Aplikasi Mobile",
@@ -81,8 +81,8 @@ const DATA = {
     },
     {
       t: "PICO",
-      // Isi url dengan link GitHub / Figma proyek ini (kosong = tombol nonaktif)
-      links: [{ type: "figma", url: "" }],
+      // Isi url dengan link GitHub / Figma proyek ini (kosong = memakai tautan bawaan: profil GitHub / figma.com)
+      links: [],
       img: "./assets/prototype/pico.jpeg",
       r: "Prototype Game",
       d: "Prototype game PICO dengan menu utama bergaya kartun.",
@@ -103,9 +103,7 @@ const DATA = {
     { t: "Workshop Tata Kelola Jaringan Sederhana dengan Mikrotik", s: "Peserta • Play IT, Jurusan Teknologi Informasi Polinema • 22-23 Juni 2026", img: "./assets/sertifikat/mikrotik.png" },
     { t: "Prastudi Mahasiswa Baru Teknologi Informasi 2025", s: "Panitia • HMTI Politeknik Negeri Malang • 18-23 Agustus 2025", img: "./assets/sertifikat/prastud.png" },
     { t: "Firma Ceria 2025 - From Lost to Led", s: "Panitia • UKM Kerohanian Islam Politeknik (RISPOL) • 16 November 2025", img: "./assets/sertifikat/firce.png" },
-    { t: "Mentoring MENYALA - Rukun Islam di Era Digitalisasi", s: "Panitia Closing Mentoring • UKM RISPOL • 20-21 September 2025", img: "./assets/sertifikat/mentoring.png" },
-    { t: "Dasar Pemrograman Web", s: "Dicoding Academy • Menguasai semantik HTML5, CSS3 Grid/Flexbox, dan JavaScript ES6" },
-    { t: "Belajar Membuat Aplikasi Flutter untuk Pemula", s: "Dicoding Academy • Fondasi arsitektur widget, state management dasar, dan layouting mobile" }
+    { t: "Mentoring MENYALA - Rukun Islam di Era Digitalisasi", s: "Panitia Closing Mentoring • UKM RISPOL • 20-21 September 2025", img: "./assets/sertifikat/mentoring.png" }
   ],
   awards: [
     { t: "Top PBL Project Showcase", s: "Apresiasi proyek terbaik dalam pameran Project-Based Learning tingkat program studi" }

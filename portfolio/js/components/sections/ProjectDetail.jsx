@@ -92,10 +92,11 @@ function ProjectDetail({ detail, onClose }) {
               <div className="pd-actions">
                 {links.map((l, i) => {
                   const meta = linkMeta[l.type] || { label: 'Buka tautan', icon: null };
-                  return l.url ? (
-                    <a key={i} className="pd-cta" href={l.url} target="_blank" rel="noopener noreferrer">{meta.icon}{meta.label}</a>
-                  ) : (
-                    <span key={i} className="pd-cta is-disabled" role="link" aria-disabled="true" title="Link belum tersedia">{meta.icon}{meta.label}</span>
+                  // Tautan bawaan bila url proyek belum diisi: profil GitHub / beranda Figma
+                  const ghProfile = (DATA.socials.find((so) => so.type === 'github') || {}).fullUrl;
+                  const href = l.url || (l.type === 'github' ? ghProfile : l.type === 'figma' ? 'https://www.figma.com/' : '#');
+                  return (
+                    <a key={i} className="pd-cta" href={href} target="_blank" rel="noopener noreferrer">{meta.icon}{meta.label}</a>
                   );
                 })}
               </div>

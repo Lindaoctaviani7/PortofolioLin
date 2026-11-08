@@ -103,7 +103,7 @@ function PortfolioTabs({ activeTab, setActiveTab, focusItem, onOpenDetail }) {
 
         {(activeTab === 'certificates' || activeTab === 'awards') && (
           <div className="cards-grid">
-            {DATA[activeTab]?.map((item, idx) => (
+            {DATA[activeTab]?.map((item, idx) => (activeTab === 'certificates' && !item.img) ? null : (
               <article className={`project-card ${highlight === `${activeTab}-${idx}` ? 'is-focus' : ''}`} id={`pf-${activeTab}-${idx}`} key={idx}>
                 {item.img && (
                   <img

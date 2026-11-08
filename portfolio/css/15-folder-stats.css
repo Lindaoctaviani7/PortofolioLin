@@ -150,10 +150,12 @@
 }
 
 /* k = urutan dari depan. Makin ke belakang: makin sempit, makin tinggi, makin dalam */
-.fc-0 { --card-bg: var(--f-paper);                                                  left: 9%; right: 9%; top: 40px; transform: translate3d(0, 0, 14px); }
-.fc-1 { --card-bg: color-mix(in srgb, var(--accent) 14%, #eef3fb);                  left: 9%; right: 9%; top: 32px; transform: translate3d(0, 0, 5px); }
-.fc-2 { --card-bg: color-mix(in srgb, var(--accent) 22%, #e2eaf6);                  left: 9%; right: 9%; top: 24px; transform: translate3d(0, 0, -4px); }
-.fc-3 { --card-bg: color-mix(in srgb, var(--accent) 30%, #d4def0);                  left: 9%; right: 9%; top: 16px; transform: translate3d(0, 0, -13px); }
+/* Posisi tiap kartu dihitung di Stats.jsx lewat variabel --top, --z, --py, --oy, --rot (jumlah kartu bebas) */
+.folder-card { left: 9%; right: 9%; top: var(--top, 40px); transform: translate3d(0, 0, var(--z, 0px)); }
+.fc-0 { --card-bg: var(--f-paper); }
+.fc-1 { --card-bg: color-mix(in srgb, var(--accent) 14%, #eef3fb); }
+.fc-2 { --card-bg: color-mix(in srgb, var(--accent) 22%, #e2eaf6); }
+.fc-3 { --card-bg: color-mix(in srgb, var(--accent) 30%, #d4def0); }
 
 .card-head {
   position: relative;
@@ -305,17 +307,13 @@
 .folder-item.is-open .folder-flap { transition-duration: 0.7s; transition-timing-function: var(--f-spring); }
 
 /* Hover (belum diklik): kartu naik sedikit mengintip */
-.folder-item.is-peek:not(.is-open) .fc-0 { transform: translate3d(0, -16px, 14px); }
-.folder-item.is-peek:not(.is-open) .fc-1 { transform: translate3d(0, -22px, 5px); }
-.folder-item.is-peek:not(.is-open) .fc-2 { transform: translate3d(0, -28px, -4px); }
-.folder-item.is-peek:not(.is-open) .fc-3 { transform: translate3d(0, -34px, -13px); }
+/* (kartu mengintip) */
+.folder-item.is-peek:not(.is-open) .folder-card { transform: translate3d(0, var(--py), var(--z)); }
 .folder-item.is-peek:not(.is-open) .folder-flap { transform: translateZ(calc(var(--D) / 2)) rotateX(-5deg); }
 
 /* Klik: kartu terbuka melebar seperti kipas kartu remi (berporos di bawah) */
-.folder-item.is-open .fc-0 { transform: translate3d(0, -112px, 14px) rotate(17deg); }
-.folder-item.is-open .fc-1 { transform: translate3d(0, -104px, 5px) rotate(6deg);   transition-delay: 0.04s; }
-.folder-item.is-open .fc-2 { transform: translate3d(0, -96px, -4px) rotate(-6deg);  transition-delay: 0.08s; }
-.folder-item.is-open .fc-3 { transform: translate3d(0, -88px, -13px) rotate(-17deg); transition-delay: 0.12s; }
+/* (kartu dikipas) */
+.folder-item.is-open .folder-card { transform: translate3d(0, var(--oy), var(--z)) rotate(var(--rot)); transition-delay: calc(var(--k) * 0.04s); }
 .folder-item.is-open .folder-flap { transform: translateZ(calc(var(--D) / 2)) rotateX(-16deg); }
 .folder-item.is-open .folder-go { transform: rotate(180deg); }
 .f3-wall { transition: opacity 0.3s ease, background-color 0.45s ease; }

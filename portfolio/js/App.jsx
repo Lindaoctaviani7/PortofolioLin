@@ -39,6 +39,7 @@ function App() {
 
   return (
     <React.Fragment>
+      <Preloader />
       <StarfieldCanvas />
       <Navbar
         activeSection={activeSection}
